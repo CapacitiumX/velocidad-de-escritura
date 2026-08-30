@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CapacitiumX - Evaluación y Emisión de Constancia Curricular</title>
+  <title>CapacitiumX - Evaluación y Constancia Curricular</title>
   <style>
     :root {
       --bg: #0b0f19;
@@ -40,7 +40,116 @@
       padding: 1.5rem;
     }
 
-    /* CONTENEDOR PRINCIPAL */
+    /* PANTALLA 1: REGISTRO OBLIGATORIO DE ACCESO */
+    .onboarding-overlay {
+      display: flex;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(11, 15, 25, 0.98);
+      backdrop-filter: blur(10px);
+      justify-content: center;
+      align-items: center;
+      z-index: 200;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+
+    .form-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 2.2rem;
+      max-width: 540px;
+      width: 100%;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+      margin: auto;
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .brand-pill {
+      display: inline-block;
+      background: #1e293b;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 0.25rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-header h2 {
+      color: var(--accent);
+      font-size: 1.6rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .form-header p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    .input-group {
+      margin-bottom: 0.85rem;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .input-group input, .input-group select {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+      background: #030712;
+      color: #fff;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .input-group input:focus, .input-group select:focus {
+      border-color: var(--accent);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .btn-submit-gate {
+      width: 100%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #0b0f19;
+      font-weight: 800;
+      font-size: 0.95rem;
+      padding: 0.85rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      margin-top: 0.6rem;
+    }
+
+    .btn-submit-gate:hover {
+      opacity: 0.9;
+    }
+
+    /* APLICACIÓN PRINCIPAL DE EVALUACIÓN */
     .container {
       width: 100%;
       max-width: 920px;
@@ -56,16 +165,14 @@
       margin-bottom: 1.8rem;
     }
 
-    .brand-badge {
+    .user-tag {
       display: inline-block;
-      background: linear-gradient(135deg, #1e293b, #0f172a);
-      border: 1px solid var(--gold);
-      padding: 0.35rem 1.1rem;
+      background: #1e293b;
+      border: 1px solid var(--card-border);
+      padding: 0.3rem 0.8rem;
       border-radius: 20px;
-      font-size: 0.85rem;
-      color: var(--gold);
-      font-weight: 700;
-      letter-spacing: 0.5px;
+      font-size: 0.82rem;
+      color: var(--accent);
       margin-bottom: 0.75rem;
     }
 
@@ -335,7 +442,7 @@
       100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); }
     }
 
-    /* MODAL DE RESULTADOS & FORMULARIO */
+    /* PANTALLA 2: MODAL DE RESULTADOS Y PAGO DE $20 */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -357,21 +464,20 @@
       border: 1px solid var(--card-border);
       border-radius: 16px;
       padding: 2.2rem;
-      max-width: 580px;
+      max-width: 540px;
       width: 100%;
       margin: auto;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+      text-align: center;
     }
 
     .modal-title {
       color: var(--accent);
       font-size: 1.6rem;
-      text-align: center;
       margin-bottom: 0.3rem;
     }
 
     .modal-subtitle {
-      text-align: center;
       color: var(--text-muted);
       font-size: 0.88rem;
       margin-bottom: 1.2rem;
@@ -379,74 +485,87 @@
 
     .score-summary-pills {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0.5rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
       background: #030712;
       border: 1px solid var(--card-border);
-      padding: 0.8rem;
+      padding: 0.9rem;
       border-radius: 10px;
-      margin-bottom: 1.4rem;
-      text-align: center;
+      margin-bottom: 1.2rem;
     }
 
     .score-pill strong {
       display: block;
       color: var(--gold);
-      font-size: 1.15rem;
+      font-size: 1.25rem;
     }
 
     .score-pill span {
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       color: var(--text-muted);
       text-transform: uppercase;
     }
 
-    .form-section-title {
-      font-size: 0.95rem;
-      color: var(--gold);
-      font-weight: 700;
-      margin-bottom: 0.8rem;
-      border-bottom: 1px solid var(--card-border);
-      padding-bottom: 0.4rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    /* Tarjeta de Pago Cuota de Recuperación $20 */
+    .payment-box {
+      background: #0f172a;
+      border: 1px solid var(--gold-dark);
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin-bottom: 1.2rem;
+      text-align: left;
     }
 
-    .input-group {
-      margin-bottom: 0.85rem;
+    .payment-badge {
+      background: var(--gold);
+      color: #0b0f19;
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 0.5rem;
     }
 
-    .input-group label {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text-main);
-      margin-bottom: 0.25rem;
-    }
-
-    .input-group input, .input-group select {
-      width: 100%;
-      padding: 0.65rem 0.85rem;
-      border-radius: 8px;
-      border: 1px solid var(--card-border);
-      background: #030712;
+    .payment-title {
       color: #fff;
-      font-size: 0.88rem;
-      outline: none;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
     }
 
-    .input-group input:focus, .input-group select:focus {
-      border-color: var(--accent);
+    .payment-amount {
+      font-size: 1.3rem;
+      color: var(--gold);
+      font-weight: 800;
+      margin-bottom: 0.6rem;
     }
 
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
+    .payment-details {
+      background: #030712;
+      border: 1px dashed #334155;
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      line-height: 1.5;
     }
 
-    .btn-generate-cert {
+    .payment-details strong {
+      color: var(--accent);
+    }
+
+    .card-number-highlight {
+      font-family: 'Consolas', monospace;
+      font-size: 1.1rem;
+      color: #fbbf24;
+      font-weight: bold;
+      letter-spacing: 1px;
+      display: block;
+      margin: 0.2rem 0;
+    }
+
+    .btn-view-cert {
       width: 100%;
       background: linear-gradient(135deg, var(--gold), var(--gold-dark));
       color: #0b0f19;
@@ -457,14 +576,13 @@
       border-radius: 8px;
       cursor: pointer;
       transition: opacity 0.2s;
-      margin-top: 0.8rem;
     }
 
-    .btn-generate-cert:hover {
+    .btn-view-cert:hover {
       opacity: 0.9;
     }
 
-    /* PANTALLA 3: CONSTANCIA OFICIAL IMPRIMIBLE / PDF */
+    /* PANTALLA 3: CONSTANCIA OFICIAL IMPRIMIBLE / PDF LIMPIO */
     #certificateModal {
       display: none;
       position: fixed;
@@ -607,10 +725,10 @@
       position: relative;
     }
 
-    .cert-signature-img {
-      width: 100px;
-      height: auto;
-      margin-bottom: -15px;
+    .cert-signature-svg {
+      width: 130px;
+      height: 60px;
+      margin-bottom: -5px;
       display: block;
       margin-left: auto;
       margin-right: auto;
@@ -665,6 +783,24 @@
       background: #1e293b;
     }
 
+    .btn-wa-confirm {
+      background: var(--whatsapp-green);
+      color: #052e16;
+      font-weight: 700;
+      padding: 0.85rem 1.8rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: opacity 0.2s;
+    }
+
+    .btn-wa-confirm:hover {
+      opacity: 0.9;
+    }
+
     .btn-close-cert {
       background: #334155;
       color: #f8fafc;
@@ -675,7 +811,7 @@
       cursor: pointer;
     }
 
-    /* CONFIGURACIÓN PARA IMPRESIÓN LIMPIA (CERO ENCABEZADOS DE NAVEGADOR) */
+    /* CONFIGURACIÓN PARA IMPRESIÓN LIMPIA */
     @page {
       size: letter landscape;
       margin: 0;
@@ -701,12 +837,13 @@
         top: 0 !important;
         width: 100vw !important;
         height: 100vh !important;
-        padding: 0.5cm !important;
+        padding: 0.6cm !important;
         margin: 0 !important;
         display: flex !important;
         justify-content: center !important;
         align-items: center !important;
         background: #ffffff !important;
+        box-sizing: border-box !important;
       }
       .cert-wrapper {
         width: 100% !important;
@@ -716,7 +853,7 @@
       .cert-card {
         box-shadow: none !important;
         border: 8px double #b45309 !important;
-        padding: 2.5rem 2.2rem !important;
+        padding: 2.2rem 2rem !important;
         page-break-inside: avoid !important;
       }
       .cert-action-bar {
@@ -728,7 +865,7 @@
       .stats-bar { grid-template-columns: repeat(2, 1fr); }
       .container { padding: 1.2rem; }
       .grid-2 { grid-template-columns: 1fr; }
-      .score-summary-pills { grid-template-columns: repeat(2, 1fr); }
+      .score-summary-pills { grid-template-columns: 1fr; }
       .cert-metrics-box { grid-template-columns: 1fr; }
       .cert-card { padding: 1.5rem; }
       .cert-student-name { font-size: 1.4rem; }
@@ -739,112 +876,18 @@
 </head>
 <body>
 
-  <!-- PANTALLA 1: PRUEBA DE VELOCIDAD -->
-  <div class="container" id="mainTestContainer">
-    <header>
-      <div class="brand-badge">CAPACITIUMX • EVALUACIÓN DIGITAL</div>
-      <h1 id="mainTitle">Test de Velocidad & Fluidez</h1>
-      <p class="subtitle">Realiza tu evaluación y obtén tu Constancia de Competencias con Valor Curricular.</p>
-    </header>
-
-    <div class="mode-switch">
-      <button class="mode-btn active-keyboard" id="btnModeKeyboard" onclick="switchMode('keyboard')">Modo Teclado</button>
-      <button class="mode-btn" id="btnModeVoice" onclick="switchMode('voice')">Modo Dictado de Voz</button>
-    </div>
-
-    <div class="stats-bar">
-      <div class="stat-card">
-        <div class="stat-value" id="timer">60</div>
-        <div class="stat-label">Tiempo (s)</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="wpm">0</div>
-        <div class="stat-label" id="wpmLabel">PPM (WPM)</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="accuracy">100%</div>
-        <div class="stat-label">Precisión</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="mistakes">0</div>
-        <div class="stat-label" id="mistakesLabel">Errores</div>
-      </div>
-    </div>
-
-    <div class="test-section active" id="keyboardSection">
-      <div class="box-container keyboard-box" onclick="focusInput()">
-        <div class="text-display" id="textDisplay"></div>
-        <input type="text" class="hidden-input" id="charInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-      </div>
-      <div class="controls">
-        <div class="time-selector">
-          <span>Tiempo:</span>
-          <button class="btn-time" onclick="setTime(30, this)">30s</button>
-          <button class="btn-time active" onclick="setTime(60, this)">60s</button>
-          <button class="btn-time" onclick="setTime(120, this)">120s</button>
-        </div>
-        <div class="actions-group">
-          <button class="btn-action btn-stop" onclick="finishTest()">Finalizar y Solicitar Constancia</button>
-          <button class="btn-action" onclick="resetKeyboardTest()">Reiniciar</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="test-section" id="voiceSection">
-      <div class="box-container">
-        <div class="voice-words-container" id="voiceWordsContainer"></div>
-        <div class="voice-live-transcript" id="voiceLiveTranscript">Haz clic en "Comenzar a Hablar" y lee fluidamente...</div>
-      </div>
-      <div class="controls">
-        <div class="time-selector">
-          <span>Tiempo:</span>
-          <button class="btn-time" onclick="setTime(30, this)">30s</button>
-          <button class="btn-time active" onclick="setTime(60, this)">60s</button>
-          <button class="btn-time" onclick="setTime(120, this)">120s</button>
-        </div>
-        <div class="actions-group">
-          <button class="btn-action btn-stop" onclick="finishTest()">Finalizar y Solicitar Constancia</button>
-          <button class="btn-action btn-voice-record" id="btnToggleVoice" onclick="toggleVoiceRecording()">Comenzar a Hablar</button>
-          <button class="btn-action" onclick="resetVoiceTest()">Reiniciar</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- PANTALLA 2: FORMULARIO DE SOLICITUD DE CONSTANCIA -->
-  <div class="modal-overlay" id="resultsModal">
-    <div class="modal-card">
-      <h2 class="modal-title">¡Evaluación Concluida!</h2>
-      <p class="modal-subtitle">Ingresa tus datos para generar tu <strong>Constancia Oficial de Habilidades</strong>.</p>
-
-      <div class="score-summary-pills">
-        <div class="score-pill">
-          <strong id="pillWpm">0</strong>
-          <span>Velocidad</span>
-        </div>
-        <div class="score-pill">
-          <strong id="pillAcc">0%</strong>
-          <span>Precisión</span>
-        </div>
-        <div class="score-pill">
-          <strong id="pillTime">0s</strong>
-          <span>Tiempo</span>
-        </div>
-        <div class="score-pill">
-          <strong id="pillMode">Teclado</strong>
-          <span>Modalidad</span>
-        </div>
+  <!-- PANTALLA 1: REGISTRO DE ENTRADA -->
+  <div class="onboarding-overlay" id="onboardingModal">
+    <div class="form-card">
+      <div class="form-header">
+        <span class="brand-pill">CAPACITIUMX</span>
+        <h2>Registro de Evaluación</h2>
+        <p>Ingresa tus datos completos para habilitar la prueba y expedir tu Constancia con Valor Curricular.</p>
       </div>
 
-      <form id="certificateForm" onsubmit="handleCertificateRequest(event)">
-        <div class="form-section-title">
-          <span>Datos del Alumno Evaluado</span>
-          <small style="color: var(--text-muted); font-size: 0.75rem;">Emisión Digital Inmediata</small>
-        </div>
-
+      <form id="onboardingForm" onsubmit="handleInitialRegistration(event)">
         <div class="input-group">
-          <label for="studentName">Nombre Completo (como aparecerá en tu constancia) *</label>
+          <label for="studentName">Nombre Completo (para tu constancia) *</label>
           <input type="text" id="studentName" placeholder="Ej. Juan Pérez Garza" required>
         </div>
 
@@ -888,14 +931,127 @@
           </div>
         </div>
 
-        <button type="submit" class="btn-generate-cert" id="btnSubmitCert">
-          🎓 Generar y Descargar mi Constancia Oficial
+        <button type="submit" class="btn-submit-gate" id="btnSubmitInitial">
+          🚀 Iniciar Evaluación Diagnóstica
         </button>
       </form>
     </div>
   </div>
 
-  <!-- PANTALLA 3: CONSTANCIA OFICIAL CON VALOR CURRICULAR (PRINT / PDF LIMPIO) -->
+  <!-- PANTALLA 2: SIMULADOR DE EVALUACIÓN -->
+  <div class="container" id="mainTestContainer">
+    <header>
+      <div class="user-tag" id="userGreetingTag">Bienvenido a CapacitiumX</div>
+      <h1 id="mainTitle">Test de Velocidad & Fluidez</h1>
+      <p class="subtitle">Escribe con el teclado o lee en voz alta con dictado inteligente.</p>
+    </header>
+
+    <div class="mode-switch">
+      <button class="mode-btn active-keyboard" id="btnModeKeyboard" onclick="switchMode('keyboard')">Modo Teclado</button>
+      <button class="mode-btn" id="btnModeVoice" onclick="switchMode('voice')">Modo Dictado de Voz</button>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-value" id="timer">60</div>
+        <div class="stat-label">Tiempo (s)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="wpm">0</div>
+        <div class="stat-label" id="wpmLabel">PPM (WPM)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="accuracy">100%</div>
+        <div class="stat-label">Precisión</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="mistakes">0</div>
+        <div class="stat-label" id="mistakesLabel">Errores</div>
+      </div>
+    </div>
+
+    <div class="test-section active" id="keyboardSection">
+      <div class="box-container keyboard-box" onclick="focusInput()">
+        <div class="text-display" id="textDisplay"></div>
+        <input type="text" class="hidden-input" id="charInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+      </div>
+      <div class="controls">
+        <div class="time-selector">
+          <span>Tiempo:</span>
+          <button class="btn-time" onclick="setTime(30, this)">30s</button>
+          <button class="btn-time active" onclick="setTime(60, this)">60s</button>
+          <button class="btn-time" onclick="setTime(120, this)">120s</button>
+        </div>
+        <div class="actions-group">
+          <button class="btn-action btn-stop" onclick="finishTest()">Finalizar Ahora</button>
+          <button class="btn-action" onclick="resetKeyboardTest()">Reiniciar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="test-section" id="voiceSection">
+      <div class="box-container">
+        <div class="voice-words-container" id="voiceWordsContainer"></div>
+        <div class="voice-live-transcript" id="voiceLiveTranscript">Haz clic en "Comenzar a Hablar" y lee fluidamente...</div>
+      </div>
+      <div class="controls">
+        <div class="time-selector">
+          <span>Tiempo:</span>
+          <button class="btn-time" onclick="setTime(30, this)">30s</button>
+          <button class="btn-time active" onclick="setTime(60, this)">60s</button>
+          <button class="btn-time" onclick="setTime(120, this)">120s</button>
+        </div>
+        <div class="actions-group">
+          <button class="btn-action btn-stop" onclick="finishTest()">Finalizar Ahora</button>
+          <button class="btn-action btn-voice-record" id="btnToggleVoice" onclick="toggleVoiceRecording()">Comenzar a Hablar</button>
+          <button class="btn-action" onclick="resetVoiceTest()">Reiniciar</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PANTALLA 3: MODAL DE RESULTADOS Y PAGO DE $20 -->
+  <div class="modal-overlay" id="resultsModal">
+    <div class="modal-card">
+      <h2 class="modal-title">¡Evaluación Concluida!</h2>
+      <p class="modal-subtitle">Tus métricas oficiales han sido registradas exitosamente.</p>
+
+      <div class="score-summary-pills">
+        <div class="score-pill">
+          <strong id="pillWpm">0</strong>
+          <span>Velocidad</span>
+        </div>
+        <div class="score-pill">
+          <strong id="pillAcc">0%</strong>
+          <span>Precisión</span>
+        </div>
+        <div class="score-pill">
+          <strong id="pillMode">Teclado</strong>
+          <span>Modalidad</span>
+        </div>
+      </div>
+
+      <!-- Cuota de Recuperación $20 MXN -->
+      <div class="payment-box">
+        <span class="payment-badge">CUOTA DE RECUPERACIÓN</span>
+        <div class="payment-title">Constancia Oficial con Valor Curricular</div>
+        <div class="payment-amount">$20.00 MXN</div>
+        
+        <div class="payment-details">
+          <div><strong>Institución:</strong> Spin by OXXO</div>
+          <div><strong>Tarjeta:</strong> <span class="card-number-highlight">4217 4702 9453 6848</span></div>
+          <div id="paymentConceptText"><strong>Concepto:</strong> [Tu Nombre] + Curricular</div>
+        </div>
+      </div>
+
+      <button class="btn-view-cert" onclick="openCertificateView()">
+        🎓 Ver y Descargar mi Constancia Oficial
+      </button>
+    </div>
+  </div>
+
+  <!-- PANTALLA 4: CONSTANCIA OFICIAL CON VALOR CURRICULAR (PRINT / PDF LIMPIO) -->
   <div id="certificateModal">
     <div class="cert-wrapper">
       <div class="cert-card" id="printableCert">
@@ -932,7 +1088,510 @@
           </div>
         </div>
 
-        <!-- Firma Institucional Oficial -->
+        <!-- Firma Oficial Institucional -->
         <div class="cert-footer">
           <div class="cert-sign-col">
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAAKGElEQVR42u2d67mcuA6F/d9Lq+DSRaQLShdMUkFkF5AuIF0gukC6gOgCSReQLiBdYLqg7fXDR+MZe46tcY4l63lY1hWb9wM3aCTBwHke8sE+mO+7Qd8HfT9034/96e9/3+37+Pz1z3/f9u/8W17/9W84h4sKz3Pevp8/f45/F63r+v1+949rF7+v3+3f3/j3uH0fx+v//73b9/9/u/k+m+6X8+/F768jZ+p73vO12/ffk8F8P/6334/9d2W99yvG++X8+y6v/dO9j1/b//Vj3x9h7bT/N9vH5X00e9+6fS+jTfd22f3RjX8b2x+p3vO12/dZ3+9V/P0a1n6GtdX7X1u3x7+H3b90r2vj/frffjvj0f1Z3q/a91zZ91f3e79jvx32fXb/t/l/l91/l+79yv7fX9/3f7j96v8z2v/f7n0Y1v8+3d/1b7l9r9/6fbb8n7+HtdP3PqV7X1v3R1jrvd96P7f/a32/Y2/2/3f0fd29z+b/F7rfjvu/Z+v9b/f+b/9/6f/9ff8Z1v5b3/t9//+v9j1/6/vj8u/r9r7Vv6f3f/3b7t/139n+/4zW/7/r+3/t+790r6ve95D7e/6/y7/j9f9n/3+2/3/7f/b/Z9/335P137f7X/rvZ7T3M/Z91v/+e18fP35fV/f/qf6f6f+N9X/f7n9d/3/2fbb/t9n72f3/2f6/+33z95fv58t/+370/7P9/97/X+7/L/931v/9e7//4/7/av+fuv+u7/t56P9P9/8a379P6f6b/v5S+/vL/n/1/d7t//r7vv9v6f9r939l/+9p//q6v185//7r/f/n+790/5f6/6b7383/7v37vv8f/V/d/7P/P/v/k/9/6f9/3f7f1f/f7X9N//9p//f+/3P/3+r+e/d/b/f/2/9/tP+H/r+r+z/0//95/1+3/637P7P/q/1/3P8//P9n33/6/5f+/6b7f9v/f7z/qfvv0v8f9v/q/u9t/8z+/+r/P/j/3/b/rPvP1f2v6v9e7v9p/9/a/7P//8f7//T9X/r/t/7/Zv//s//v/v+X/r/c/6H778/3X/f/rf/P/v9f9390//2z/b/z/tfs/+H/z/7/bvv/6/d/7P9b939q/3/3//t/v/7/r/9/t/+/dv9/9P+f9v+n7v8//f/v/r/1/3f8/2j/d//flf9/6//P/v/t/8/2/4f//+f+/2X7/133/3v//6/t//b/f/v/uv/f2/8f/v+z/X/V/n/1/z/9/5ftf4v//4v9v+7/T/v/l/7/V/f/qfs/uv+n/b/b/3v6/0v7f9v/j7r/v/r/rPvvnv7/cv//sf9f+v9T/39n/8z9f67vf07///P/H/v/vv6P/f8b97+r/7+6/z/7f+j+j/T/VfffdP//2/2frP8v/P/L/f9r//+m+79c//+g+z+5/r9S//+Y+3/d//vd/w+z/5/u/1fd/8r9X9n/e7r/p/v/s/4/+/9P/f/b/Z+u/2fd/6n7v1P/f/b/u/3/vf//2v6f/v+v//9j//+0/X+t/7/Z/7/2//v+n7b/n73//9v/37b/L+z/cf3/n/7/T/e/rf7/ovuf3v8v8/+n/d/9/5f1/3fb/7/s/+n/z/3/x/3/7P4fvf+t/f97///T/h/6/9P8f9r/7/z/7/b/l/Z/d/8r7P9r+3+e/f8r9/8Y/v8S7v+19n9e/T+n//85+7+e/7/p/3+a/7+q/3+9/f/2/j/k/9/Y/676f4P9r9r/v+z/f+z/f+j/L/t/0/3f//9P/v/d9z9b/7P6/yXf/3X3v5v9n5L+/4f9P+3/n/7/3vb/N//v7P63/f+a/b+v7f9V8v9H3/9z7/9b5v/X5f/n5v/t3f/79/8I8/+F/f+V/f+p/3+z/5/B/6H9P+b/v8n+F/T/zfvfVv8b6n8t3/9V3/9o93+A/v+F9j+N8//P/n/T/X/u9/+X/n9W/7/r/7vd/yH2vyb4/2f8/473/3z9/6X9H9X+P63//5r7/wD//1fvf1X//zL3/678P2L/t+z/P9j/Q/+/6f5/7f93/v8/9/839/8t/P/m/n/p/z9z//fa/2P6/5vu/9b8v8T7v7b//y73fxH8v2H+/6b4/6T3/5/4/1P/f1v/38H/f87/353//8f+fwz4f774vx79f0f9n8D+P5/7f/P3f9n/P5b/P6D7P9D/P/7/m/r/pP+/+r+v/Z97/zfy/0b0fwf87yD/14X/98T/u/T/T/1fuf+/7v+m//9q+z8d9f+J+v+j+79o/7f5/0r//0r9v4/9P+j/e9v/Lfvflv3f3f/H7P/B/Z/P/v+m/79H/j9F+X8t8b+S+v+1/7+q+x9W9/9p/3/P9l+n/1/S/5+8/5vy/zvx/3zy/wv2/wbx/xj3/xf6/5n8P/T/7/z/5v//s/+/W/vfYf/X0f9f3P9b4v+X9v9d8/9f8f9t9/9u/X93/f+S/n/v/p+x/3vu/zT0f7n4f3X7/9H7v+r+34b//w39P/P/q/x/o/9/tf+r/f8v+/+V/b/h/n+L/d+U//fA/7X9f/D/q/f/Pff/Lvb/j/3/w/7/2//v3v933f8r0P9k8f/s+P/u+P8R/P8e/n/8/v/m+7/d/zvx/6T7/7X9v9P//8/9f4H6fzP1/0v5/9H6/yP4fzPy/y/1/4/9/4f/f6H/v7H/f/H/pvn/x/f/6/l/M/z/Xf7/bv7/fv3/oP7/0/z/8ff/GPr/Lf3/W/7/c//vrP+b6v8/7v9k8P8h8P9I7v9E8v9a8/9/9f+x+n/b/v/s/n+y/X8Y/L9n/P8d/v8k/f+L/3+R/n+c/L92/v8G/f+e/3/C//fN//fg/9fo/9/+/xH2/wH2/zjv/37+/6H7f9r7v6/8fxX4f9z1v7r9/zP7/yP9/yT+/0f8v1n+/yD//57+/1T//1P/v0f4Pwf874P6Pyb1v8L6P/j8Pxf4v7j7/3P+Hxv6v+v6f2P8vyz6PyL9vy79P4D8/0f//1z//wD+/yH8v5j7f878f8v9v4H//9H/v0T//2L9n6r9P9b8fyr+v7b9P6P//4n//+f7v3j+vxX9/1f7vw39fxr+Pxj/P+39/97/P/H+f+D//5n9v2T/38b9X738vy7//3j/v1b//1r9/2z7vwD+/yb9fxX+fwT//w3+f/z9n8j9v8X9/0H//8j+/wb/f9r8fx/7/9z9f1f//x39/wP8vwD8fyb8vyH/fwL+/wT/fwT/fwT/PwL//7P+/5P//2b8fxL8/0n8vyf+/x38vwj/PwD//z7+/8r9fwL8fwT/vwj/fwf//wH/fwH/PwD//wb//0P//yD//xr+PwH+/xH+/wD//4H+/13//wT//yT9/5T//xr//y7+/yD//wD//wb//w7//y7//yz//xr+/8n//5P//0f//xb//xb+/73//73//0f//xr//zL//zL//yb//wz//xD//xj//w7//wT//wL//wn//yn//yT//wr//wL//xj//wD//yT//wr//wb//xD//wz//xr//yr//yn//w7//wT//wf//x7//xj//wL//wL//w7//wf//wr//wb//wr//wX//wb//wb//wf//wT//wD//wX//wb//wX//wL//wL//wf//wb//wL//wb//wb//wb//wL//wL//wX//wX//wL//wb//wb//wf//wL//wX//wL//wL//wL//wb//wb//wL//wL//wL//wL//wL//wb//wb//wL//wL//wL//wL//wL//wX//wX//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wL//wSoy una IA basada en texto y no tengo esa capacidad.
+            <!-- Trazo Vectorial Limpio de Firma -->
+            <svg class="cert-signature-svg" viewBox="0 0 160 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M78 8 C78 28, 80 58, 82 66 C83 68, 89 62, 88 52 C86 38, 77 34, 72 44 C67 54, 72 62, 78 60 C84 58, 88 48, 92 40 C95 35, 100 48, 103 44" stroke="#0f172a" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M69 36 C71 30, 77 28, 80 34" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+            <div class="cert-sign-line">Director General CapacitiumX</div>
+            <div class="cert-sign-title">Mtro. Rafael Garza Hinojosa</div>
+          </div>
+
+          <div class="cert-folio-col">
+            <div><strong>Folio Oficial:</strong> <span id="certDisplayFolio">CPX-2026-0000</span></div>
+            <div><strong>Fecha de Emisión:</strong> <span id="certDisplayDate">30 de Agosto de 2026</span></div>
+            <div><strong>Validez Curricular:</strong> Registrada en Padrón</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra de Acciones de la Constancia -->
+      <div class="cert-action-bar">
+        <button class="btn-print" onclick="window.print()">🖨️ Descargar en PDF / Imprimir Constancia</button>
+        <a id="btnCertWhatsApp" href="#" target="_blank" class="btn-wa-confirm">
+          📲 Enviar Comprobante de $20 a WhatsApp
+        </a>
+        <button class="btn-close-cert" onclick="closeCertModal()">Cerrar / Realizar Otra Prueba</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const TARGET_EMAIL = "capacitiumx@gmail.com";
+    const TARGET_WHATSAPP = "528131103846";
+
+    let currentUser = {
+      name: "",
+      age: "",
+      city: "",
+      career: "",
+      period: "",
+      phone: "",
+      email: "",
+      folio: ""
+    };
+
+    const texts = [
+      "El exito de cualquier proyecto empresarial se basa en la disciplina constante, la adaptabilidad y el analisis de mercado. Aprender habilidades practicas permite crear herramientas independientes y rentables.",
+      "La programacion web moderna ofrece infinitas posibilidades para optimizar flujos de trabajo, automatizar reportes financieros y procesar datos con gran velocidad. Mantener la concentracion agiliza el desarrollo continuo.",
+      "La planificacion estrategica y el control de inventarios son pilares basicos en la administracion comercial. Toda empresa necesita procesos claros, medicion de resultados continuos y una comunicacion efectiva."
+    ];
+
+    let currentMode = 'keyboard';
+    let maxTime = 60;
+    let timeLeft = maxTime;
+    let timeSpent = 0;
+    let timer = null;
+
+    let isTyping = false;
+    let charIndex = 0;
+    let kMistakes = 0;
+    let totalTypedChars = 0;
+
+    let recognition = null;
+    let isRecording = false;
+    let voiceWords = [];
+    let voiceWordIndex = 0;
+    let vCorrectWords = 0;
+    let vMistakes = 0;
+
+    const timerTag = document.getElementById('timer');
+    const wpmTag = document.getElementById('wpm');
+    const accuracyTag = document.getElementById('accuracy');
+    const mistakesTag = document.getElementById('mistakes');
+    const textDisplay = document.getElementById('textDisplay');
+    const charInput = document.getElementById('charInput');
+    const voiceWordsContainer = document.getElementById('voiceWordsContainer');
+    const voiceLiveTranscript = document.getElementById('voiceLiveTranscript');
+    const btnToggleVoice = document.getElementById('btnToggleVoice');
+    const resultsModal = document.getElementById('resultsModal');
+    const certificateModal = document.getElementById('certificateModal');
+
+    // 1. REGISTRO INICIAL OBLIGATORIO Y ENVÍO AUTOMÁTICO AL CORREO
+    function handleInitialRegistration(event) {
+      event.preventDefault();
+      const btn = document.getElementById('btnSubmitInitial');
+      btn.innerText = "Registrando...";
+      btn.disabled = true;
+
+      currentUser.name = document.getElementById('studentName').value.trim();
+      currentUser.age = document.getElementById('studentAge').value.trim();
+      currentUser.city = document.getElementById('studentCity').value.trim();
+      currentUser.career = document.getElementById('studentCareer').value.trim();
+      currentUser.period = document.getElementById('studentPeriod').value;
+      currentUser.phone = document.getElementById('studentPhone').value.trim();
+      currentUser.email = document.getElementById('studentEmail').value.trim();
+      currentUser.folio = 'CPX-' + Math.floor(100000 + Math.random() * 900000);
+
+      // Envío en segundo plano de todos los datos al correo capacitiumx@gmail.com
+      fetch(`https://formsubmit.co/ajax/${TARGET_EMAIL}`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: `[ACCESO INICIAL] Alumno: ${currentUser.name} (Folio: ${currentUser.folio})`,
+          Nombre_Completo: currentUser.name,
+          Edad: currentUser.age,
+          Municipio_Ciudad: currentUser.city,
+          Carrera_Especialidad: currentUser.career,
+          Grado_Semestre_Tetra: currentUser.period,
+          Telefono_WhatsApp: currentUser.phone,
+          Correo_Electronico: currentUser.email,
+          Folio_Asignado: currentUser.folio,
+          Fecha_Registro: new Date().toLocaleString("es-MX")
+        })
+      }).catch(err => console.error("Error al registrar:", err));
+
+      // Actualizar saludo y concepto de pago
+      document.getElementById('userGreetingTag').innerText = `Estudiante: ${currentUser.name} (${currentUser.career})`;
+      document.getElementById('paymentConceptText').innerHTML = `<strong>Concepto:</strong> ${currentUser.name} Curricular`;
+
+      // Cerrar modal inicial
+      document.getElementById('onboardingModal').style.display = 'none';
+      focusInput();
+    }
+
+    function cleanWord(str) {
+      if (!str) return "";
+      return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.,;:!?¿¡"'()]/g, "").trim();
+    }
+
+    function initSpeechRecognition() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        voiceLiveTranscript.innerText = "Navegador sin soporte de voz nativo. Recomendado Chrome/Edge.";
+        btnToggleVoice.disabled = true;
+        return;
+      }
+
+      recognition = new SpeechRecognition();
+      recognition.lang = 'es-MX';
+      recognition.continuous = true;
+      recognition.interimResults = true;
+
+      recognition.onresult = (event) => {
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            processSpokenWords(event.results[i][0].transcript);
+          } else {
+            voiceLiveTranscript.innerText = `Escuchando: "${event.results[i][0].transcript}"`;
+          }
+        }
+      };
+
+      recognition.onerror = (e) => {
+        if (e.error === 'not-allowed') {
+          voiceLiveTranscript.innerText = "Acceso al micrófono denegado.";
+          stopVoiceTest();
+        }
+      };
+
+      recognition.onend = () => {
+        if (isRecording && timeLeft > 0) {
+          try { recognition.start(); } catch (err) {}
+        }
+      };
+    }
+
+    function processSpokenWords(spokenText) {
+      const rawWords = spokenText.split(/\s+/);
+      const wordElements = voiceWordsContainer.querySelectorAll('.v-word');
+
+      rawWords.forEach(w => {
+        const cleanedSpoken = cleanWord(w);
+        if (!cleanedSpoken || cleanedSpoken === 'coma' || cleanedSpoken === 'punto') return;
+        if (voiceWordIndex >= voiceWords.length) return;
+
+        const cleanedTarget = cleanWord(voiceWords[voiceWordIndex]);
+        wordElements[voiceWordIndex].classList.remove('current');
+
+        if (cleanedTarget === cleanedSpoken) {
+          wordElements[voiceWordIndex].classList.add('correct');
+          vCorrectWords++;
+        } else {
+          wordElements[voiceWordIndex].classList.add('incorrect');
+          vMistakes++;
+        }
+
+        voiceWordIndex++;
+
+        if (voiceWordIndex >= voiceWords.length) {
+          finishTest();
+          return;
+        }
+
+        wordElements[voiceWordIndex].classList.add('current');
+      });
+
+      calculateVoiceMetrics();
+    }
+
+    function calculateVoiceMetrics() {
+      const currentSpent = timeSpent > 0 ? timeSpent : 1;
+      const minutes = currentSpent / 60;
+      const wpm = Math.round(vCorrectWords / minutes) || 0;
+      const totalAttempted = vCorrectWords + vMistakes;
+      const accuracy = totalAttempted > 0 ? Math.round((vCorrectWords / totalAttempted) * 100) : 100;
+
+      wpmTag.innerText = wpm;
+      accuracyTag.innerText = `${accuracy}%`;
+      mistakesTag.innerText = vMistakes;
+    }
+
+    function switchMode(mode) {
+      clearInterval(timer);
+      currentMode = mode;
+      
+      const btnK = document.getElementById('btnModeKeyboard');
+      const btnV = document.getElementById('btnModeVoice');
+      const secK = document.getElementById('keyboardSection');
+      const secV = document.getElementById('voiceSection');
+
+      if (mode === 'keyboard') {
+        stopVoiceTest();
+        btnK.className = 'mode-btn active-keyboard';
+        btnV.className = 'mode-btn';
+        secK.classList.add('active');
+        secV.classList.remove('active');
+        wpmTag.classList.remove('voice-color');
+        resetKeyboardTest();
+      } else {
+        btnK.className = 'mode-btn';
+        btnV.className = 'mode-btn active-voice';
+        secK.classList.remove('active');
+        secV.classList.add('active');
+        wpmTag.classList.add('voice-color');
+        resetVoiceTest();
+      }
+    }
+
+    function loadKeyboardParagraph() {
+      const rand = Math.floor(Math.random() * texts.length);
+      textDisplay.innerHTML = "";
+      texts[rand].split("").forEach(char => {
+        const span = document.createElement("span");
+        span.innerText = char;
+        span.className = "char";
+        textDisplay.appendChild(span);
+      });
+      if (textDisplay.firstChild) textDisplay.firstChild.classList.add("current");
+    }
+
+    function focusInput() { charInput.focus(); }
+
+    function initKeyboardTyping(e) {
+      const chars = textDisplay.querySelectorAll('.char');
+      const typed = charInput.value.slice(-1);
+
+      if (!isTyping && timeLeft > 0) {
+        timer = setInterval(updateTimer, 1000);
+        isTyping = true;
+      }
+
+      if (e.inputType === "deleteContentBackward") {
+        if (charIndex > 0) {
+          chars[charIndex].classList.remove('current');
+          charIndex--;
+          if (chars[charIndex].classList.contains('incorrect')) kMistakes--;
+          chars[charIndex].classList.remove('correct', 'incorrect');
+          chars[charIndex].classList.add('current');
+          totalTypedChars = Math.max(0, totalTypedChars - 1);
+        }
+      } else if (charIndex < chars.length) {
+        totalTypedChars++;
+        if (chars[charIndex].innerText === typed) {
+          chars[charIndex].classList.add('correct');
+        } else {
+          kMistakes++;
+          chars[charIndex].classList.add('incorrect');
+        }
+        chars[charIndex].classList.remove('current');
+        charIndex++;
+
+        if (charIndex >= chars.length) {
+          finishTest();
+          return;
+        }
+
+        chars[charIndex].classList.add('current');
+      }
+
+      calculateKeyboardMetrics();
+    }
+
+    function calculateKeyboardMetrics() {
+      const currentSpent = timeSpent > 0 ? timeSpent : 1;
+      const correctChars = totalTypedChars - kMistakes;
+      const minutes = currentSpent / 60;
+      const wpm = Math.round((correctChars / 5) / minutes) || 0;
+      const accuracy = totalTypedChars > 0 ? Math.round(((totalTypedChars - kMistakes) / totalTypedChars) * 100) : 100;
+
+      wpmTag.innerText = wpm < 0 ? 0 : wpm;
+      accuracyTag.innerText = `${accuracy < 0 ? 0 : accuracy}%`;
+      mistakesTag.innerText = kMistakes;
+    }
+
+    function loadVoiceParagraph() {
+      const rand = Math.floor(Math.random() * texts.length);
+      voiceWords = texts[rand].split(" ");
+      voiceWordIndex = 0;
+      voiceWordsContainer.innerHTML = "";
+
+      voiceWords.forEach((word) => {
+        const span = document.createElement("span");
+        span.innerText = word;
+        span.className = "v-word";
+        voiceWordsContainer.appendChild(span);
+      });
+
+      if (voiceWordsContainer.firstChild) {
+        voiceWordsContainer.firstChild.classList.add("current");
+      }
+    }
+
+    function toggleVoiceRecording() {
+      if (!isRecording) startVoiceTest();
+      else stopVoiceTest();
+    }
+
+    function startVoiceTest() {
+      if (!recognition) return;
+      try {
+        recognition.start();
+        isRecording = true;
+        btnToggleVoice.innerText = "Pausar Micrófono";
+        btnToggleVoice.classList.add('pulse');
+        voiceLiveTranscript.innerText = "Escuchando...";
+        if (!timer) timer = setInterval(updateTimer, 1000);
+      } catch (err) {}
+    }
+
+    function stopVoiceTest() {
+      if (recognition && isRecording) {
+        isRecording = false;
+        recognition.stop();
+        btnToggleVoice.innerText = "Comenzar a Hablar";
+        btnToggleVoice.classList.remove('pulse');
+      }
+    }
+
+    function updateTimer() {
+      if (timeLeft > 0) {
+        timeLeft--;
+        timeSpent++;
+        timerTag.innerText = timeLeft;
+        if (currentMode === 'keyboard') calculateKeyboardMetrics();
+        else calculateVoiceMetrics();
+      } else {
+        finishTest();
+      }
+    }
+
+    // 2. FINALIZAR PRUEBA Y ENVÍO AUTOMÁTICO DE MÉTRICAS A TU CORREO
+    function finishTest() {
+      clearInterval(timer);
+      timer = null;
+      if (currentMode === 'voice') stopVoiceTest();
+      charInput.blur();
+
+      const isKey = currentMode === 'keyboard';
+      if (isKey) calculateKeyboardMetrics();
+      else calculateVoiceMetrics();
+
+      const finalWpm = wpmTag.innerText;
+      const finalAcc = accuracyTag.innerText;
+      const finalDur = `${timeSpent}s`;
+      const finalModeName = isKey ? "Teclado" : "Voz";
+      const finalErr = isKey ? kMistakes : vMistakes;
+
+      document.getElementById('pillWpm').innerText = `${finalWpm} PPM`;
+      document.getElementById('pillAcc').innerText = finalAcc;
+      document.getElementById('pillMode').innerText = finalModeName;
+
+      // ENVÍO EN SEGUNDO PLANO DE LOS RESULTADOS COMPLETOS A CAPACITIUMX@GMAIL.COM
+      fetch(`https://formsubmit.co/ajax/${TARGET_EMAIL}`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: `[RESULTADO EVALUACIÓN] ${currentUser.name} - ${finalWpm} PPM (Folio: ${currentUser.folio})`,
+          Nombre_Completo: currentUser.name,
+          Edad: currentUser.age,
+          Municipio_Ciudad: currentUser.city,
+          Carrera_Especialidad: currentUser.career,
+          Grado_Semestre_Tetra: currentUser.period,
+          Telefono_WhatsApp: currentUser.phone,
+          Correo_Electronico: currentUser.email,
+          Folio_Oficial: currentUser.folio,
+          Velocidad_PPM: finalWpm,
+          Precision: finalAcc,
+          Errores_Cometidos: finalErr,
+          Tiempo_Empleado: finalDur,
+          Modalidad: finalModeName,
+          Cuota_Constancia: "$20.00 MXN",
+          Fecha_Hora: new Date().toLocaleString("es-MX")
+        })
+      }).catch(err => console.error("Error al sincronizar resultados:", err));
+
+      resultsModal.style.display = "flex";
+    }
+
+    // 3. GENERAR Y DESPLEGAR LA CONSTANCIA OFICIAL
+    function openCertificateView() {
+      const isKey = currentMode === 'keyboard';
+      const finalWpm = wpmTag.innerText;
+      const finalAcc = accuracyTag.innerText;
+      const finalMode = isKey ? 'Teclado' : 'Dictado por Voz';
+      const fechaHoy = new Date().toLocaleDateString("es-MX", { year: 'numeric', month: 'long', day: 'numeric' });
+
+      // Población de datos
+      document.getElementById('certDisplayName').innerText = currentUser.name.toUpperCase();
+      document.getElementById('certDisplayCareer').innerText = currentUser.career;
+      document.getElementById('certDisplayPeriod').innerText = currentUser.period;
+      document.getElementById('certDisplayWpm').innerText = `${finalWpm} PPM`;
+      document.getElementById('certDisplayAcc').innerText = finalAcc;
+      document.getElementById('certDisplayMode').innerText = finalMode;
+      document.getElementById('certDisplayFolio').innerText = currentUser.folio;
+      document.getElementById('certDisplayDate').innerText = fechaHoy;
+
+      // Mensaje de WhatsApp para comprobante de $20 MXN
+      const waMsg = `*PAGO DE CONSTANCIA CURRICULAR - CAPACITIUMX*%0A` +
+        `━━━━━━━━━━━━━━━━━━━━%0A` +
+        `🎓 *Alumno:* ${currentUser.name}%0A` +
+        `📚 *Carrera:* ${currentUser.career} (${currentUser.period})%0A` +
+        `📄 *Folio:* ${currentUser.folio}%0A` +
+        `📊 *Resultado:* ${finalWpm} PPM | ${finalAcc} precisión%0A` +
+        `💰 *Cuota de Recuperación:* $20.00 MXN%0A` +
+        `💳 *Depósito realizado a:* Spin by OXXO (4217 4702 9453 6848)%0A` +
+        `━━━━━━━━━━━━━━━━━━━━%0A` +
+        `Adjunto comprobante de pago de $20 pesos para validación oficial en padrón.`;
+
+      document.getElementById('btnCertWhatsApp').href = `https://wa.me/${TARGET_WHATSAPP}?text=${encodeURIComponent(waMsg)}`;
+
+      resultsModal.style.display = "none";
+      certificateModal.style.display = "flex";
+    }
+
+    function closeCertModal() {
+      certificateModal.style.display = "none";
+      if (currentMode === 'keyboard') resetKeyboardTest();
+      else resetVoiceTest();
+    }
+
+    function setTime(sec, btn) {
+      maxTime = sec;
+      document.querySelectorAll('.btn-time').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (currentMode === 'keyboard') resetKeyboardTest();
+      else resetVoiceTest();
+    }
+
+    function resetKeyboardTest() {
+      clearInterval(timer);
+      timer = null;
+      timeLeft = maxTime;
+      timeSpent = 0;
+      charIndex = 0;
+      kMistakes = 0;
+      totalTypedChars = 0;
+      isTyping = false;
+      charInput.value = "";
+      
+      timerTag.innerText = timeLeft;
+      wpmTag.innerText = "0";
+      accuracyTag.innerText = "100%";
+      mistakesTag.innerText = "0";
+      
+      loadKeyboardParagraph();
+      focusInput();
+    }
+
+    function resetVoiceTest() {
+      clearInterval(timer);
+      timer = null;
+      stopVoiceTest();
+      timeLeft = maxTime;
+      timeSpent = 0;
+      vCorrectWords = 0;
+      vMistakes = 0;
+      voiceWordIndex = 0;
+
+      timerTag.innerText = timeLeft;
+      wpmTag.innerText = "0";
+      accuracyTag.innerText = "100%";
+      mistakesTag.innerText = "0";
+      voiceLiveTranscript.innerText = 'Haz clic en "Comenzar a Hablar" y lee las palabras fluidamente...';
+
+      loadVoiceParagraph();
+    }
+
+    charInput.addEventListener("input", initKeyboardTyping);
+    window.addEventListener("load", () => {
+      initSpeechRecognition();
+      loadKeyboardParagraph();
+      loadVoiceParagraph();
+    });
+  </script>
+</body>
+</html>
