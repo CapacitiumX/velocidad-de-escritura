@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prueba de Velocidad: Teclado y Dictado de Voz Inteligente</title>
+  <title>Evaluador de Velocidad & Registro Académico</title>
   <style>
     :root {
       --bg: #0b0f19;
@@ -14,9 +14,10 @@
       --voice-accent: #f43f5e;
       --voice-hover: #e11d48;
       --text-main: #f3f4f6;
-      --text-muted: #6b7280;
+      --text-muted: #94a3b8;
       --correct: #10b981;
       --incorrect: #ef4444;
+      --whatsapp-green: #22c55e;
     }
 
     * {
@@ -36,6 +37,102 @@
       padding: 1.5rem;
     }
 
+    /* PANTALLA 1: FORMULARIO DE ACCESO */
+    .onboarding-overlay {
+      display: flex;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(11, 15, 25, 0.95);
+      backdrop-filter: blur(8px);
+      justify-content: center;
+      align-items: center;
+      z-index: 200;
+      padding: 1rem;
+    }
+
+    .form-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 2.5rem;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .form-header h2 {
+      color: var(--accent);
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-header p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .input-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+    }
+
+    .input-group input, .input-group select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+      background: #030712;
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .input-group input:focus, .input-group select:focus {
+      border-color: var(--accent);
+    }
+
+    .grid-2-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--accent);
+      color: #04121d;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 0.85rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    .btn-submit:hover {
+      background: var(--accent-hover);
+    }
+
+    /* PANTALLA 2: APLICACIÓN PRINCIPAL */
     .container {
       width: 100%;
       max-width: 900px;
@@ -49,6 +146,17 @@
     header {
       text-align: center;
       margin-bottom: 1.5rem;
+    }
+
+    .welcome-badge {
+      display: inline-block;
+      background: #1e293b;
+      border: 1px solid var(--card-border);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
     }
 
     h1 {
@@ -316,6 +424,7 @@
       100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); }
     }
 
+    /* MODAL DE RESULTADOS & OFERTA */
     .results-overlay {
       display: none;
       position: fixed;
@@ -323,56 +432,99 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(4px);
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
       justify-content: center;
       align-items: center;
-      z-index: 100;
+      z-index: 150;
+      padding: 1rem;
     }
 
     .results-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 16px;
-      padding: 2.5rem;
+      padding: 2rem;
       text-align: center;
-      max-width: 450px;
-      width: 90%;
+      max-width: 480px;
+      width: 100%;
     }
 
     .results-title {
       color: var(--accent);
       font-size: 1.5rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
     }
 
     .results-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-bottom: 2rem;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
     }
 
     .result-item {
       background: #1e293b;
-      padding: 1rem;
+      padding: 0.8rem;
       border-radius: 10px;
     }
 
     .result-val {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-weight: bold;
     }
 
     .result-lbl {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
       margin-top: 0.2rem;
+    }
+
+    /* Oferta Educativa de Cursos */
+    .promo-box {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+
+    .promo-box h4 {
+      color: var(--accent);
+      font-size: 0.95rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .promo-box p {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      line-height: 1.3;
+      margin-bottom: 0.8rem;
+    }
+
+    .btn-whatsapp {
+      display: inline-block;
+      width: 100%;
+      background-color: var(--whatsapp-green);
+      color: #052e16;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-decoration: none;
+      text-align: center;
+      padding: 0.65rem;
+      border-radius: 8px;
+      transition: opacity 0.2s;
+    }
+
+    .btn-whatsapp:hover {
+      opacity: 0.9;
     }
 
     @media (max-width: 600px) {
       .stats-bar { grid-template-columns: repeat(2, 1fr); }
       .container { padding: 1.5rem; }
+      .grid-2-col { grid-template-columns: 1fr; gap: 0; }
       .controls { flex-direction: column; align-items: stretch; }
       .actions-group { flex-direction: column; }
     }
@@ -380,10 +532,60 @@
 </head>
 <body>
 
+  <!-- PANTALLA 1: FORMULARIO DE ACCESO Y CAPTURA DE LEADS -->
+  <div class="onboarding-overlay" id="onboardingModal">
+    <div class="form-card">
+      <div class="form-header">
+        <h2>Evaluación de Competencias</h2>
+        <p>Completa tus datos para ingresar al simulador interactivo de velocidad y recibir tu informe de diagnóstico.</p>
+      </div>
+
+      <form id="leadForm" onsubmit="handleRegistration(event)">
+        <div class="input-group">
+          <label for="userName">Nombre Completo *</label>
+          <input type="text" id="userName" placeholder="Ej. Juan Pérez" required>
+        </div>
+
+        <div class="input-group">
+          <label for="userEmail">Correo Electrónico *</label>
+          <input type="email" id="userEmail" placeholder="correo@ejemplo.com" required>
+        </div>
+
+        <div class="input-group">
+          <label for="userPhone">WhatsApp / Teléfono *</label>
+          <input type="tel" id="userPhone" placeholder="10 dígitos" required>
+        </div>
+
+        <div class="grid-2-col">
+          <div class="input-group">
+            <label for="userCareer">Carrera o Especialidad *</label>
+            <input type="text" id="userCareer" placeholder="Ej. Administración" required>
+          </div>
+
+          <div class="input-group">
+            <label for="userPeriod">Semestre / Tetramestre *</label>
+            <select id="userPeriod" required>
+              <option value="" disabled selected>Selecciona</option>
+              <option value="1 a 3">1° - 3° (Inicial)</option>
+              <option value="4 a 6">4° - 6° (Intermedio)</option>
+              <option value="7 a 9">7° - 9° (Avanzado)</option>
+              <option value="Egresado">Egresado / Titulado</option>
+              <option value="Posgrado">Posgrado / Maestría</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">Comenzar Evaluación</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- PANTALLA 2: APLICACIÓN PRINCIPAL -->
   <div class="container">
     <header>
-      <h1 id="mainTitle">Evaluador de Velocidad</h1>
-      <p class="subtitle">Escribe o lee en voz alta. Las comas y puntos no te penalizarán.</p>
+      <div class="welcome-badge" id="userGreetingBadge">Bienvenido al Evaluador</div>
+      <h1 id="mainTitle">Test de Velocidad y Expresión</h1>
+      <p class="subtitle">Evalúa tu rapidez con el teclado o fluidez verbal mediante el micrófono.</p>
     </header>
 
     <!-- Selector de Modo -->
@@ -412,7 +614,7 @@
       </div>
     </div>
 
-    <!-- SECCIÓN 1: MODO TECLADO -->
+    <!-- MODO TECLADO -->
     <div class="test-section active" id="keyboardSection">
       <div class="box-container keyboard-box" onclick="focusInput()">
         <div class="text-display" id="textDisplay"></div>
@@ -432,7 +634,7 @@
       </div>
     </div>
 
-    <!-- SECCIÓN 2: MODO DICTADO DE VOZ -->
+    <!-- MODO DICTADO DE VOZ -->
     <div class="test-section" id="voiceSection">
       <div class="box-container">
         <div class="voice-words-container" id="voiceWordsContainer"></div>
@@ -455,10 +657,10 @@
 
   </div>
 
-  <!-- Modal de Resultados -->
+  <!-- MODAL DE RESULTADOS Y CAPTACIÓN POST-PRUEBA -->
   <div class="results-overlay" id="resultsModal">
     <div class="results-card">
-      <h2 class="results-title" id="modalTitle">¡Prueba Finalizada!</h2>
+      <h2 class="results-title" id="modalTitle">¡Evaluación Concluida!</h2>
       <div class="results-grid">
         <div class="result-item">
           <div class="result-val" id="finalWpm">0</div>
@@ -474,14 +676,32 @@
         </div>
         <div class="result-item">
           <div class="result-val" id="finalMistakes">0</div>
-          <div class="result-lbl">Errores Cometidos</div>
+          <div class="result-lbl">Errores</div>
         </div>
       </div>
-      <button class="btn-action" style="width: 100%;" onclick="closeModalAndReset()">Probar de Nuevo</button>
+
+      <!-- Bloque de Oferta para tus Cursos y Formación -->
+      <div class="promo-box">
+        <h4 id="promoUserName">¡Mejora tu Productividad Profesional!</h4>
+        <p>Descubre nuestros cursos especializados en automatización, competencias laborales y herramientas digitales aplicadas a tu carrera.</p>
+        <a id="btnWhatsAppPromo" href="#" target="_blank" class="btn-whatsapp">Solicitar Información por WhatsApp</a>
+      </div>
+
+      <button class="btn-action" style="width: 100%;" onclick="closeModalAndReset()">Hacer Otra Prueba</button>
     </div>
   </div>
 
   <script>
+    // Variables de Registro
+    let currentUser = {
+      name: "",
+      email: "",
+      phone: "",
+      career: "",
+      period: ""
+    };
+
+    // Textos de Evaluación
     const texts = [
       "El exito de cualquier proyecto empresarial se basa en la disciplina constante, la adaptabilidad y el analisis de mercado. Aprender habilidades practicas permite crear herramientas independientes y rentables.",
       "La programacion web moderna ofrece infinitas posibilidades para optimizar flujos de trabajo, automatizar reportes financieros y procesar datos con gran velocidad. Mantener la concentracion agiliza el desarrollo continuo.",
@@ -499,7 +719,6 @@
     let charIndex = 0;
     let kMistakes = 0;
     let totalTypedChars = 0;
-    let totalTargetChars = 0;
 
     // Estado Voz
     let recognition = null;
@@ -521,22 +740,44 @@
     const btnToggleVoice = document.getElementById('btnToggleVoice');
     const resultsModal = document.getElementById('resultsModal');
 
-    // Función para normalizar texto (quita acentos, puntuación y comas)
-    function cleanWord(str) {
-      if (!str) return "";
-      return str
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "") // Remueve tildes
-        .replace(/[.,;:!?¿¡"'()]/g, "")  // Remueve puntuación
-        .trim();
+    // 1. MANEJO DEL REGISTRO INICIAL
+    function handleRegistration(event) {
+      event.preventDefault();
+      
+      currentUser.name = document.getElementById('userName').value.trim();
+      currentUser.email = document.getElementById('userEmail').value.trim();
+      currentUser.phone = document.getElementById('userPhone').value.trim();
+      currentUser.career = document.getElementById('userCareer').value.trim();
+      currentUser.period = document.getElementById('userPeriod').value;
+
+      // Guardar en localStorage
+      localStorage.setItem('lead_user', JSON.stringify(currentUser));
+
+      // Actualizar saludos y enlaces
+      document.getElementById('userGreetingBadge').innerText = `Estudiante: ${currentUser.name} (${currentUser.career} - ${currentUser.period})`;
+      document.getElementById('promoUserName').innerText = `¡${currentUser.name}, lleva tu perfil al siguiente nivel!`;
+      
+      // Configurar enlace de WhatsApp personalizado
+      const waNumber = "528100000000"; // Reemplazar con tu número oficial
+      const waMessage = encodeURIComponent(`Hola, acabo de completar la prueba de velocidad. Mi nombre es ${currentUser.name}, estudio ${currentUser.career} (${currentUser.period}) y me gustaría recibir información sobre sus cursos y certificaciones.`);
+      document.getElementById('btnWhatsAppPromo').href = `https://wa.me/${waNumber}?text=${waMessage}`;
+
+      // Ocultar formulario inicial y dar foco a la prueba
+      document.getElementById('onboardingModal').style.display = 'none';
+      focusInput();
     }
 
-    // Configuración Reconocimiento de Voz
+    // Normalizador de texto para voz
+    function cleanWord(str) {
+      if (!str) return "";
+      return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.,;:!?¿¡"'()]/g, "").trim();
+    }
+
+    // Configuración de Reconocimiento de Voz
     function initSpeechRecognition() {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
-        voiceLiveTranscript.innerText = "Tu navegador no soporta reconocimiento de voz nativo. Recomendado Chrome/Edge.";
+        voiceLiveTranscript.innerText = "Reconocimiento de voz nativo no disponible en este navegador. Utiliza Chrome o Edge.";
         btnToggleVoice.disabled = true;
         return;
       }
@@ -549,11 +790,9 @@
       recognition.onresult = (event) => {
         for (let i = event.resultIndex; i < event.results.length; ++i) {
           if (event.results[i].isFinal) {
-            const finalPiece = event.results[i][0].transcript;
-            processSpokenWords(finalPiece);
+            processSpokenWords(event.results[i][0].transcript);
           } else {
-            const interim = event.results[i][0].transcript;
-            voiceLiveTranscript.innerText = `Escuchando: "${interim}"`;
+            voiceLiveTranscript.innerText = `Escuchando: "${event.results[i][0].transcript}"`;
           }
         }
       };
@@ -572,15 +811,12 @@
       };
     }
 
-    // Procesador de Palabras Habladas sin bloqueo por signos
     function processSpokenWords(spokenText) {
       const rawWords = spokenText.split(/\s+/);
       const wordElements = voiceWordsContainer.querySelectorAll('.v-word');
 
       rawWords.forEach(w => {
         const cleanedSpoken = cleanWord(w);
-        
-        // Ignora palabras de comando que el usuario diga por reflejo
         if (!cleanedSpoken || cleanedSpoken === 'coma' || cleanedSpoken === 'punto') return;
         if (voiceWordIndex >= voiceWords.length) return;
 
@@ -597,7 +833,6 @@
 
         voiceWordIndex++;
 
-        // Si terminó todas las palabras del texto antes de que acabe el tiempo
         if (voiceWordIndex >= voiceWords.length) {
           finishTest();
           return;
@@ -621,7 +856,6 @@
       mistakesTag.innerText = vMistakes;
     }
 
-    // Alternar Modos
     function switchMode(mode) {
       clearInterval(timer);
       currentMode = mode;
@@ -653,10 +887,7 @@
     function loadKeyboardParagraph() {
       const rand = Math.floor(Math.random() * texts.length);
       textDisplay.innerHTML = "";
-      const textArr = texts[rand].split("");
-      totalTargetChars = textArr.length;
-
-      textArr.forEach(char => {
+      texts[rand].split("").forEach(char => {
         const span = document.createElement("span");
         span.innerText = char;
         span.className = "char";
@@ -696,7 +927,6 @@
         chars[charIndex].classList.remove('current');
         charIndex++;
 
-        // Si llegó al final del texto antes de que termine el tiempo
         if (charIndex >= chars.length) {
           finishTest();
           return;
@@ -765,7 +995,6 @@
       }
     }
 
-    // Temporizador
     function updateTimer() {
       if (timeLeft > 0) {
         timeLeft--;
@@ -778,7 +1007,6 @@
       }
     }
 
-    // Finalizar prueba en cualquier instante
     function finishTest() {
       clearInterval(timer);
       timer = null;
@@ -851,13 +1079,12 @@
       else resetVoiceTest();
     }
 
-    // Inicialización
+    // Inicialización general
     charInput.addEventListener("input", initKeyboardTyping);
     window.addEventListener("load", () => {
       initSpeechRecognition();
       loadKeyboardParagraph();
       loadVoiceParagraph();
-      focusInput();
     });
   </script>
 </body>
