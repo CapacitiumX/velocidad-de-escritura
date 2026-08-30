@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CapacitiumX - Diagnóstico de Velocidad & Registro</title>
+  <title>CapacitiumX - Diagnóstico de Velocidad & Registro Automático</title>
   <style>
     :root {
       --bg: #0b0f19;
@@ -38,7 +38,7 @@
       padding: 1.5rem;
     }
 
-    /* PANTALLA INICIAL DE CAPTURA */
+    /* PANTALLA INICIAL DE CAPTURA OBLIGATORIA */
     .onboarding-overlay {
       display: flex;
       position: fixed;
@@ -46,8 +46,8 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(11, 15, 25, 0.96);
-      backdrop-filter: blur(8px);
+      background: rgba(11, 15, 25, 0.98);
+      backdrop-filter: blur(10px);
       justify-content: center;
       align-items: center;
       z-index: 200;
@@ -61,7 +61,7 @@
       padding: 2.2rem;
       max-width: 520px;
       width: 100%;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
     }
 
     .form-header {
@@ -95,7 +95,7 @@
 
     .input-group input, .input-group select {
       width: 100%;
-      padding: 0.7rem 0.9rem;
+      padding: 0.75rem 0.9rem;
       border-radius: 8px;
       border: 1px solid var(--card-border);
       background: #030712;
@@ -121,7 +121,7 @@
       color: #04121d;
       font-weight: 700;
       font-size: 0.95rem;
-      padding: 0.8rem;
+      padding: 0.85rem;
       border: none;
       border-radius: 8px;
       cursor: pointer;
@@ -425,7 +425,7 @@
       100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); }
     }
 
-    /* MODAL DE RESULTADOS & REPORTE */
+    /* MODAL DE RESULTADOS & ESTADO DE SINCRONIZACIÓN */
     .results-overlay {
       display: none;
       position: fixed;
@@ -433,7 +433,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.82);
+      background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(6px);
       justify-content: center;
       align-items: center;
@@ -479,6 +479,34 @@
       font-size: 0.72rem;
       color: var(--text-muted);
       margin-top: 0.2rem;
+    }
+
+    .sync-status-box {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      margin-bottom: 1.2rem;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .sync-status-icon {
+      font-size: 1.3rem;
+    }
+
+    .sync-status-text {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
+    .sync-status-text strong {
+      color: var(--accent);
+      display: block;
+      margin-bottom: 0.15rem;
     }
 
     .promo-box {
@@ -534,27 +562,27 @@
 </head>
 <body>
 
-  <!-- PANTALLA 1: FORMULARIO DE ACCESO Y ENVÍO AUTOMÁTICO A TU CORREO -->
+  <!-- FORMULARIO OBLIGATORIO DE ENTRADA -->
   <div class="onboarding-overlay" id="onboardingModal">
     <div class="form-card">
       <div class="form-header">
-        <h2>Evaluación de Diagnóstico</h2>
-        <p>Ingresa tus datos para habilitar el simulador. Recibirás tu constancia y recomendaciones de formación.</p>
+        <h2>Evaluación Diagnóstica</h2>
+        <p>Ingresa tus datos completos para habilitar la prueba. Tus resultados quedarán registrados automáticamente en el sistema de CapacitiumX.</p>
       </div>
 
       <form id="leadForm" onsubmit="handleRegistration(event)">
         <div class="input-group">
           <label for="userName">Nombre Completo *</label>
-          <input type="text" id="userName" name="Nombre" placeholder="Ej. Juan Pérez" required>
+          <input type="text" id="userName" name="Nombre" placeholder="Ej. Juan Pérez Garza" required>
         </div>
 
         <div class="input-group">
           <label for="userEmail">Correo Electrónico *</label>
-          <input type="email" id="userEmail" name="Email" placeholder="correo@ejemplo.com" required>
+          <input type="email" id="userEmail" name="Email" placeholder="ejemplo@correo.com" required>
         </div>
 
         <div class="input-group">
-          <label for="userPhone">WhatsApp / Teléfono *</label>
+          <label for="userPhone">WhatsApp / Teléfono Móvil *</label>
           <input type="tel" id="userPhone" name="Telefono" placeholder="10 dígitos" required>
         </div>
 
@@ -577,17 +605,17 @@
           </div>
         </div>
 
-        <button type="submit" class="btn-submit" id="btnSubmitForm">Acceder a la Evaluación</button>
+        <button type="submit" class="btn-submit" id="btnSubmitForm">Iniciar Evaluación</button>
       </form>
     </div>
   </div>
 
-  <!-- PANTALLA 2: APLICACIÓN PRINCIPAL -->
+  <!-- APLICACIÓN PRINCIPAL -->
   <div class="container">
     <header>
       <div class="welcome-badge" id="userGreetingBadge">CapacitiumX Diagnóstico</div>
       <h1 id="mainTitle">Test de Velocidad & Fluidez</h1>
-      <p class="subtitle">Mide tu agilidad en teclado o dicción verbal con dictado de voz inteligente.</p>
+      <p class="subtitle">Escribe con el teclado o lee en voz alta con dictado inteligente.</p>
     </header>
 
     <div class="mode-switch">
@@ -658,7 +686,7 @@
 
   </div>
 
-  <!-- PANTALLA 3: RESULTADOS Y ENVÍO A WHATSAPP -->
+  <!-- MODAL DE RESULTADOS & NOTIFICACIÓN DE ENVÍO AUTOMÁTICO -->
   <div class="results-overlay" id="resultsModal">
     <div class="results-card">
       <h2 class="results-title" id="modalTitle">¡Evaluación Concluida!</h2>
@@ -681,25 +709,34 @@
         </div>
       </div>
 
-      <!-- Envío Directo del Reporte a tu WhatsApp -->
+      <!-- Estado de Envío Automático Confirmado -->
+      <div class="sync-status-box">
+        <span class="sync-status-icon">✅</span>
+        <div class="sync-status-text">
+          <strong>Resultados Guardados y Transmitidos</strong>
+          Tus métricas de desempeño se registraron automáticamente con tu perfil de estudiante.
+        </div>
+      </div>
+
+      <!-- Contacto Opcional con Asesor -->
       <div class="promo-box">
-        <h4 id="promoUserName">Reporte Listo para CapacitiumX</h4>
-        <p>Envía tus resultados directamente al asesor para recibir tu retroalimentación y oferta educativa personalizada.</p>
+        <h4 id="promoUserName">CapacitiumX Consultoría & Formación</h4>
+        <p>¿Deseas una constancia digital o asesoría para optimizar tu perfil profesional? Escríbenos directamente.</p>
         <a id="btnWhatsAppReport" href="#" target="_blank" class="btn-whatsapp">
-          Enviar Resultados por WhatsApp al 8131103846
+          Contactar por WhatsApp al 8131103846
         </a>
       </div>
 
-      <button class="btn-action" style="width: 100%;" onclick="closeModalAndReset()">Hacer Otra Prueba</button>
+      <button class="btn-action" style="width: 100%;" onclick="closeModalAndReset()">Realizar Otra Prueba</button>
     </div>
   </div>
 
   <script>
-    // DATOS DE CONTACTO DE CAPACITIUMX
     const TARGET_EMAIL = "capacitiumx@gmail.com";
     const TARGET_WHATSAPP = "528131103846";
+    // Si creas una Web App en Google Apps Script, pega aquí tu URL para guardar directo en tu Google Sheets:
+    const GOOGLE_SHEETS_WEBHOOK_URL = ""; 
 
-    // Variables de Registro
     let currentUser = {
       name: "",
       email: "",
@@ -720,13 +757,11 @@
     let timeSpent = 0;
     let timer = null;
 
-    // Estado Teclado
     let isTyping = false;
     let charIndex = 0;
     let kMistakes = 0;
     let totalTypedChars = 0;
 
-    // Estado Voz
     let recognition = null;
     let isRecording = false;
     let voiceWords = [];
@@ -734,7 +769,6 @@
     let vCorrectWords = 0;
     let vMistakes = 0;
 
-    // DOM
     const timerTag = document.getElementById('timer');
     const wpmTag = document.getElementById('wpm');
     const accuracyTag = document.getElementById('accuracy');
@@ -746,11 +780,11 @@
     const btnToggleVoice = document.getElementById('btnToggleVoice');
     const resultsModal = document.getElementById('resultsModal');
 
-    // 1. ENVÍO AUTOMÁTICO DE DATOS INICIALES A TU CORREO
+    // REGISTRO INICIAL OBLIGATORIO Y ENVÍO EN SEGUNDO PLANO
     function handleRegistration(event) {
       event.preventDefault();
       const btnSubmit = document.getElementById('btnSubmitForm');
-      btnSubmit.innerText = "Registrando y accediendo...";
+      btnSubmit.innerText = "Registrando...";
       btnSubmit.disabled = true;
 
       currentUser.name = document.getElementById('userName').value.trim();
@@ -759,47 +793,50 @@
       currentUser.career = document.getElementById('userCareer').value.trim();
       currentUser.period = document.getElementById('userPeriod').value;
 
-      // Envío en segundo plano al correo capacitiumx@gmail.com
+      // 1. Envío silencioso a tu correo de aviso de ingreso
       fetch(`https://formsubmit.co/ajax/${TARGET_EMAIL}`, {
         method: "POST",
-        headers: { 
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
-          _subject: `Nuevo Registro de Alumno: ${currentUser.name}`,
-          Nombre_Completo: currentUser.name,
+          _subject: `[ACCESO INICIAL] Alumno: ${currentUser.name}`,
+          Alumno: currentUser.name,
           Email: currentUser.email,
-          Telefono_WhatsApp: currentUser.phone,
-          Carrera_Especialidad: currentUser.career,
+          Telefono: currentUser.phone,
+          Carrera: currentUser.career,
           Semestre_Tetra: currentUser.period,
-          Fecha_Hora: new Date().toLocaleString("es-MX")
+          Hora_Acceso: new Date().toLocaleString("es-MX")
         })
-      })
-      .then(response => response.json())
-      .then(data => console.log("Registro enviado a correo:", data))
-      .catch(error => console.error("Error al enviar a correo:", error));
+      }).catch(err => console.log(err));
 
-      // Actualizar interfaz
+      // 2. Si configuraste webhook a Google Sheets, se manda en silencio
+      if (GOOGLE_SHEETS_WEBHOOK_URL) {
+        fetch(GOOGLE_SHEETS_WEBHOOK_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            tipo: "REGISTRO_INICIAL",
+            ...currentUser,
+            fecha: new Date().toLocaleString("es-MX")
+          })
+        }).catch(err => console.log(err));
+      }
+
       document.getElementById('userGreetingBadge').innerText = `Estudiante: ${currentUser.name} | ${currentUser.career} (${currentUser.period})`;
       document.getElementById('promoUserName').innerText = `¡${currentUser.name}, resultados listos!`;
-
-      // Ocultar modal de registro
       document.getElementById('onboardingModal').style.display = 'none';
       focusInput();
     }
 
-    // Normalizador de texto para voz
     function cleanWord(str) {
       if (!str) return "";
       return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.,;:!?¿¡"'()]/g, "").trim();
     }
 
-    // Configuración Reconocimiento de Voz
     function initSpeechRecognition() {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
-        voiceLiveTranscript.innerText = "Navegador sin soporte de voz nativo. Recomendado Chrome/Edge.";
+        voiceLiveTranscript.innerText = "Navegador sin soporte de voz nativo. Usa Chrome o Edge.";
         btnToggleVoice.disabled = true;
         return;
       }
@@ -821,7 +858,7 @@
 
       recognition.onerror = (e) => {
         if (e.error === 'not-allowed') {
-          voiceLiveTranscript.innerText = "Micrófono bloqueado. Permite el acceso.";
+          voiceLiveTranscript.innerText = "Acceso al micrófono denegado.";
           stopVoiceTest();
         }
       };
@@ -905,7 +942,6 @@
       }
     }
 
-    // Teclado
     function loadKeyboardParagraph() {
       const rand = Math.floor(Math.random() * texts.length);
       textDisplay.innerHTML = "";
@@ -972,7 +1008,6 @@
       mistakesTag.innerText = kMistakes;
     }
 
-    // Voz
     function loadVoiceParagraph() {
       const rand = Math.floor(Math.random() * texts.length);
       voiceWords = texts[rand].split(" ");
@@ -1029,7 +1064,7 @@
       }
     }
 
-    // 2. FINALIZACIÓN Y GENERACIÓN DEL REPORTE COMPLETO A TU WHATSAPP Y CORREO
+    // ENVÍO SILENCIOSO Y AUTOMÁTICO DE LOS RESULTADOS COMPLETOS AL TERMINAR
     function finishTest() {
       clearInterval(timer);
       timer = null;
@@ -1051,44 +1086,52 @@
       document.getElementById('finalMistakes').innerText = finalErr;
       document.getElementById('finalTimeSpent').innerText = finalDur;
 
-      // Estructura del mensaje de reporte para tu WhatsApp
-      const mensajeWhatsApp = `*REPORTE DE EVALUACIÓN - CAPACITIUMX*%0A` +
-        `━━━━━━━━━━━━━━━━━━━━%0A` +
-        `👤 *Alumno:* ${currentUser.name}%0A` +
-        `📧 *Email:* ${currentUser.email}%0A` +
-        `📱 *Teléfono:* ${currentUser.phone}%0A` +
-        `🎓 *Carrera:* ${currentUser.career}%0A` +
-        `📅 *Semestre/Tetra:* ${currentUser.period}%0A` +
-        `━━━━━━━━━━━━━━━━━━━━%0A` +
-        `📊 *RESULTADOS:*%0A` +
-        `• *Modo:* ${isKey ? 'Teclado' : 'Dictado por Voz'}%0A` +
-        `• *Velocidad:* ${finalWpm} PPM%0A` +
-        `• *Precisión:* ${finalAcc}%0A` +
-        `• *Errores cometidos:* ${finalErr}%0A` +
-        `• *Tiempo de ejecución:* ${finalDur}%0A` +
-        `━━━━━━━━━━━━━━━━━━━━%0A` +
-        `Solicito información de los cursos y programas de capacitación disponibles.`;
-
-      document.getElementById('btnWhatsAppReport').href = `https://wa.me/${TARGET_WHATSAPP}?text=${mensajeWhatsApp}`;
-
-      // Envío del reporte final también al correo en segundo plano
+      // 1. ENVÍO AUTOMÁTICO A TU CORREO (SIN QUE EL USUARIO HAGA NADA)
       fetch(`https://formsubmit.co/ajax/${TARGET_EMAIL}`, {
         method: "POST",
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
-          _subject: `Resultado de Evaluación: ${currentUser.name} (${finalWpm} PPM)`,
+          _subject: `[EVALUACIÓN COMPLETADA] ${currentUser.name} - ${finalWpm} PPM`,
           Alumno: currentUser.name,
           Email: currentUser.email,
-          Telefono: currentUser.phone,
+          Telefono_WhatsApp: currentUser.phone,
           Carrera: currentUser.career,
           Semestre_Tetra: currentUser.period,
-          Modo_Prueba: isKey ? 'Teclado' : 'Voz',
-          Palabras_Por_Minuto: finalWpm,
+          Modo_Evaluado: isKey ? 'Teclado' : 'Dictado por Voz',
+          Velocidad_PPM: finalWpm,
           Precision: finalAcc,
-          Errores: finalErr,
-          Tiempo_Empleo: finalDur
+          Errores_Cometidos: finalErr,
+          Tiempo_Empleado: finalDur,
+          Fecha_Hora: new Date().toLocaleString("es-MX")
         })
-      }).catch(err => console.error("Error reporte correo:", err));
+      }).then(r => r.json()).then(d => console.log("Resultado sincronizado con éxito.")).catch(e => console.error(e));
+
+      // 2. ENVÍO AUTOMÁTICO A GOOGLE SHEETS (SI LO TIENES CONECTADO)
+      if (GOOGLE_SHEETS_WEBHOOK_URL) {
+        fetch(GOOGLE_SHEETS_WEBHOOK_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            tipo: "RESULTADO_FINAL",
+            nombre: currentUser.name,
+            email: currentUser.email,
+            telefono: currentUser.phone,
+            carrera: currentUser.career,
+            semestre: currentUser.period,
+            modo: isKey ? 'Teclado' : 'Voz',
+            ppm: finalWpm,
+            precision: finalAcc,
+            errores: finalErr,
+            tiempo: finalDur,
+            fecha: new Date().toLocaleString("es-MX")
+          })
+        }).catch(err => console.log(err));
+      }
+
+      // Enlace de WhatsApp opcional por si el usuario decide contactar
+      const mensajeWhatsApp = `Hola, mi nombre es ${currentUser.name} de ${currentUser.career}. Acabo de realizar el diagnóstico en CapacitiumX obteniendo ${finalWpm} PPM (${finalAcc} precisión). Deseo más información sobre sus cursos.`;
+      document.getElementById('btnWhatsAppReport').href = `https://wa.me/${TARGET_WHATSAPP}?text=${encodeURIComponent(mensajeWhatsApp)}`;
 
       resultsModal.style.display = "flex";
     }
