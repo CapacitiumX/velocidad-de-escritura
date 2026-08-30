@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prueba de Velocidad: Teclado y Dictado de Voz</title>
+  <title>Prueba de Velocidad: Teclado y Dictado de Voz Inteligente</title>
   <style>
     :root {
       --bg: #0b0f19;
@@ -62,7 +62,6 @@
       font-size: 0.95rem;
     }
 
-    /* Selector de Modo */
     .mode-switch {
       display: flex;
       justify-content: center;
@@ -94,7 +93,6 @@
       border-color: var(--voice-accent);
     }
 
-    /* Tablero de Métricas */
     .stats-bar {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -129,7 +127,6 @@
       color: var(--text-muted);
     }
 
-    /* Cajas de Prueba */
     .test-section {
       display: none;
     }
@@ -148,7 +145,6 @@
       margin-bottom: 1.5rem;
     }
 
-    /* Modo Teclado */
     .keyboard-box {
       cursor: text;
     }
@@ -194,7 +190,6 @@
       height: 100%;
     }
 
-    /* Modo Voz */
     .voice-words-container {
       display: flex;
       flex-wrap: wrap;
@@ -214,6 +209,7 @@
       color: #fff;
       background: #334155;
       font-weight: 600;
+      border-bottom: 2px solid var(--voice-accent);
     }
 
     .v-word.correct {
@@ -235,7 +231,6 @@
       min-height: 25px;
     }
 
-    /* Controles */
     .controls {
       display: flex;
       justify-content: space-between;
@@ -272,13 +267,18 @@
       border-color: var(--accent);
     }
 
+    .actions-group {
+      display: flex;
+      gap: 0.5rem;
+    }
+
     .btn-action {
       background: var(--accent);
       color: #0b0f19;
       border: none;
       border-radius: 8px;
-      padding: 0.6rem 1.4rem;
-      font-size: 0.95rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 0.9rem;
       font-weight: 700;
       cursor: pointer;
       transition: background 0.2s;
@@ -286,6 +286,15 @@
 
     .btn-action:hover {
       background: var(--accent-hover);
+    }
+
+    .btn-stop {
+      background: #334155;
+      color: #f8fafc;
+    }
+
+    .btn-stop:hover {
+      background: #475569;
     }
 
     .btn-voice-record {
@@ -307,7 +316,6 @@
       100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); }
     }
 
-    /* Modal */
     .results-overlay {
       display: none;
       position: fixed;
@@ -365,6 +373,8 @@
     @media (max-width: 600px) {
       .stats-bar { grid-template-columns: repeat(2, 1fr); }
       .container { padding: 1.5rem; }
+      .controls { flex-direction: column; align-items: stretch; }
+      .actions-group { flex-direction: column; }
     }
   </style>
 </head>
@@ -373,13 +383,13 @@
   <div class="container">
     <header>
       <h1 id="mainTitle">Evaluador de Velocidad</h1>
-      <p class="subtitle">Mide tu agilidad con el teclado o tu fluidez verbal con el micrófono.</p>
+      <p class="subtitle">Escribe o lee en voz alta. Las comas y puntos no te penalizarán.</p>
     </header>
 
     <!-- Selector de Modo -->
     <div class="mode-switch">
       <button class="mode-btn active-keyboard" id="btnModeKeyboard" onclick="switchMode('keyboard')">Modo Teclado</button>
-      <button class="mode-btn" id="btnModeVoice" onclick="switchMode('voice')">Modo Dictado de Voz (Micrófono)</button>
+      <button class="mode-btn" id="btnModeVoice" onclick="switchMode('voice')">Modo Dictado de Voz</button>
     </div>
 
     <!-- Barra de Métricas Compartida -->
@@ -415,7 +425,10 @@
           <button class="btn-time active" onclick="setTime(60, this)">60s</button>
           <button class="btn-time" onclick="setTime(120, this)">120s</button>
         </div>
-        <button class="btn-action" onclick="resetKeyboardTest()">Reiniciar Teclado</button>
+        <div class="actions-group">
+          <button class="btn-action btn-stop" onclick="finishTest()">Finalizar Ahora</button>
+          <button class="btn-action" onclick="resetKeyboardTest()">Reiniciar</button>
+        </div>
       </div>
     </div>
 
@@ -423,7 +436,7 @@
     <div class="test-section" id="voiceSection">
       <div class="box-container">
         <div class="voice-words-container" id="voiceWordsContainer"></div>
-        <div class="voice-live-transcript" id="voiceLiveTranscript">Haz clic en "Comenzar a Hablar" y lee el texto...</div>
+        <div class="voice-live-transcript" id="voiceLiveTranscript">Haz clic en "Comenzar a Hablar" y lee las palabras fluidamente...</div>
       </div>
       <div class="controls">
         <div class="time-selector">
@@ -432,7 +445,11 @@
           <button class="btn-time active" onclick="setTime(60, this)">60s</button>
           <button class="btn-time" onclick="setTime(120, this)">120s</button>
         </div>
-        <button class="btn-action btn-voice-record" id="btnToggleVoice" onclick="toggleVoiceRecording()">Comenzar a Hablar</button>
+        <div class="actions-group">
+          <button class="btn-action btn-stop" onclick="finishTest()">Finalizar Ahora</button>
+          <button class="btn-action btn-voice-record" id="btnToggleVoice" onclick="toggleVoiceRecording()">Comenzar a Hablar</button>
+          <button class="btn-action" onclick="resetVoiceTest()">Reiniciar</button>
+        </div>
       </div>
     </div>
 
@@ -452,8 +469,8 @@
           <div class="result-lbl">Precisión</div>
         </div>
         <div class="result-item">
-          <div class="result-val" id="finalMetric3">0</div>
-          <div class="result-lbl" id="finalLabel3">Caracteres Netos</div>
+          <div class="result-val" id="finalTimeSpent">0s</div>
+          <div class="result-lbl">Tiempo Empleado</div>
         </div>
         <div class="result-item">
           <div class="result-val" id="finalMistakes">0</div>
@@ -465,16 +482,16 @@
   </div>
 
   <script>
-    // Textos de prueba
     const texts = [
-      "El exito de cualquier proyecto empresarial se basa en la disciplina constante y la capacidad de adaptarse a los cambios del entorno digital. Aprender habilidades practicas permite crear herramientas independientes y rentables.",
-      "La programacion web moderna ofrece infinitas posibilidades para optimizar flujos de trabajo, automatizar reportes financieros y procesar datos con gran velocidad. Mantener la concentracion agiliza el desarrollo.",
+      "El exito de cualquier proyecto empresarial se basa en la disciplina constante, la adaptabilidad y el analisis de mercado. Aprender habilidades practicas permite crear herramientas independientes y rentables.",
+      "La programacion web moderna ofrece infinitas posibilidades para optimizar flujos de trabajo, automatizar reportes financieros y procesar datos con gran velocidad. Mantener la concentracion agiliza el desarrollo continuo.",
       "La planificacion estrategica y el control de inventarios son pilares basicos en la administracion comercial. Toda empresa necesita procesos claros, medicion de resultados continuos y una comunicacion efectiva."
     ];
 
-    let currentMode = 'keyboard'; // 'keyboard' o 'voice'
+    let currentMode = 'keyboard';
     let maxTime = 60;
     let timeLeft = maxTime;
+    let timeSpent = 0;
     let timer = null;
 
     // Estado Teclado
@@ -482,6 +499,7 @@
     let charIndex = 0;
     let kMistakes = 0;
     let totalTypedChars = 0;
+    let totalTargetChars = 0;
 
     // Estado Voz
     let recognition = null;
@@ -491,7 +509,7 @@
     let vCorrectWords = 0;
     let vMistakes = 0;
 
-    // Elementos DOM
+    // DOM
     const timerTag = document.getElementById('timer');
     const wpmTag = document.getElementById('wpm');
     const accuracyTag = document.getElementById('accuracy');
@@ -503,11 +521,22 @@
     const btnToggleVoice = document.getElementById('btnToggleVoice');
     const resultsModal = document.getElementById('resultsModal');
 
-    // Inicializar Reconocimiento de Voz
+    // Función para normalizar texto (quita acentos, puntuación y comas)
+    function cleanWord(str) {
+      if (!str) return "";
+      return str
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "") // Remueve tildes
+        .replace(/[.,;:!?¿¡"'()]/g, "")  // Remueve puntuación
+        .trim();
+    }
+
+    // Configuración Reconocimiento de Voz
     function initSpeechRecognition() {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
-        voiceLiveTranscript.innerText = "Tu navegador no soporta reconocimiento de voz nativo. Usa Chrome o Edge.";
+        voiceLiveTranscript.innerText = "Tu navegador no soporta reconocimiento de voz nativo. Recomendado Chrome/Edge.";
         btnToggleVoice.disabled = true;
         return;
       }
@@ -518,47 +547,47 @@
       recognition.interimResults = true;
 
       recognition.onresult = (event) => {
-        let interimTranscript = '';
         for (let i = event.resultIndex; i < event.results.length; ++i) {
-          const transcriptPiece = event.results[i][0].transcript.trim().toLowerCase();
           if (event.results[i].isFinal) {
-            processSpokenWords(transcriptPiece);
+            const finalPiece = event.results[i][0].transcript;
+            processSpokenWords(finalPiece);
           } else {
-            interimTranscript += transcriptPiece;
+            const interim = event.results[i][0].transcript;
+            voiceLiveTranscript.innerText = `Escuchando: "${interim}"`;
           }
         }
-        voiceLiveTranscript.innerText = interimTranscript ? `Escuchando: "${interimTranscript}"` : 'Escuchando...';
       };
 
       recognition.onerror = (e) => {
-        console.error("Error de voz:", e.error);
         if (e.error === 'not-allowed') {
-          voiceLiveTranscript.innerText = "Acceso al micrófono denegado. Habilita los permisos.";
+          voiceLiveTranscript.innerText = "Acceso al micrófono denegado.";
           stopVoiceTest();
         }
       };
 
       recognition.onend = () => {
         if (isRecording && timeLeft > 0) {
-          recognition.start(); // Mantener activo si no ha terminado el tiempo
+          try { recognition.start(); } catch (err) {}
         }
       };
     }
 
-    // Procesar palabras habladas
+    // Procesador de Palabras Habladas sin bloqueo por signos
     function processSpokenWords(spokenText) {
-      const spokenWordsList = spokenText.split(/\s+/);
+      const rawWords = spokenText.split(/\s+/);
       const wordElements = voiceWordsContainer.querySelectorAll('.v-word');
 
-      spokenWordsList.forEach(word => {
+      rawWords.forEach(w => {
+        const cleanedSpoken = cleanWord(w);
+        
+        // Ignora palabras de comando que el usuario diga por reflejo
+        if (!cleanedSpoken || cleanedSpoken === 'coma' || cleanedSpoken === 'punto') return;
         if (voiceWordIndex >= voiceWords.length) return;
 
-        const cleanTarget = voiceWords[voiceWordIndex].toLowerCase().replace(/[^a-záéíóúñ]/g, '');
-        const cleanSpoken = word.replace(/[^a-záéíóúñ]/g, '');
-
+        const cleanedTarget = cleanWord(voiceWords[voiceWordIndex]);
         wordElements[voiceWordIndex].classList.remove('current');
 
-        if (cleanTarget === cleanSpoken) {
+        if (cleanedTarget === cleanedSpoken) {
           wordElements[voiceWordIndex].classList.add('correct');
           vCorrectWords++;
         } else {
@@ -568,19 +597,21 @@
 
         voiceWordIndex++;
 
-        if (voiceWordIndex < voiceWords.length) {
-          wordElements[voiceWordIndex].classList.add('current');
-        } else {
-          loadVoiceParagraph();
+        // Si terminó todas las palabras del texto antes de que acabe el tiempo
+        if (voiceWordIndex >= voiceWords.length) {
+          finishTest();
+          return;
         }
+
+        wordElements[voiceWordIndex].classList.add('current');
       });
 
       calculateVoiceMetrics();
     }
 
     function calculateVoiceMetrics() {
-      const timeSpent = maxTime - timeLeft;
-      const minutes = timeSpent > 0 ? timeSpent / 60 : 1 / 60;
+      const currentSpent = timeSpent > 0 ? timeSpent : 1;
+      const minutes = currentSpent / 60;
       const wpm = Math.round(vCorrectWords / minutes) || 0;
       const totalAttempted = vCorrectWords + vMistakes;
       const accuracy = totalAttempted > 0 ? Math.round((vCorrectWords / totalAttempted) * 100) : 100;
@@ -618,17 +649,20 @@
       }
     }
 
-    // Métodos Teclado
+    // Teclado
     function loadKeyboardParagraph() {
       const rand = Math.floor(Math.random() * texts.length);
       textDisplay.innerHTML = "";
-      texts[rand].split("").forEach(char => {
+      const textArr = texts[rand].split("");
+      totalTargetChars = textArr.length;
+
+      textArr.forEach(char => {
         const span = document.createElement("span");
         span.innerText = char;
         span.className = "char";
         textDisplay.appendChild(span);
       });
-      if(textDisplay.firstChild) textDisplay.firstChild.classList.add("current");
+      if (textDisplay.firstChild) textDisplay.firstChild.classList.add("current");
     }
 
     function focusInput() { charInput.focus(); }
@@ -662,21 +696,22 @@
         chars[charIndex].classList.remove('current');
         charIndex++;
 
-        if (charIndex < chars.length) {
-          chars[charIndex].classList.add('current');
-        } else {
-          loadKeyboardParagraph();
-          charIndex = 0;
+        // Si llegó al final del texto antes de que termine el tiempo
+        if (charIndex >= chars.length) {
+          finishTest();
+          return;
         }
+
+        chars[charIndex].classList.add('current');
       }
 
       calculateKeyboardMetrics();
     }
 
     function calculateKeyboardMetrics() {
-      const timeSpent = maxTime - timeLeft;
+      const currentSpent = timeSpent > 0 ? timeSpent : 1;
       const correctChars = totalTypedChars - kMistakes;
-      const minutes = timeSpent > 0 ? timeSpent / 60 : 1 / 60;
+      const minutes = currentSpent / 60;
       const wpm = Math.round((correctChars / 5) / minutes) || 0;
       const accuracy = totalTypedChars > 0 ? Math.round(((totalTypedChars - kMistakes) / totalTypedChars) * 100) : 100;
 
@@ -685,7 +720,7 @@
       mistakesTag.innerText = kMistakes;
     }
 
-    // Métodos Voz
+    // Voz
     function loadVoiceParagraph() {
       const rand = Math.floor(Math.random() * texts.length);
       voiceWords = texts[rand].split(" ");
@@ -705,11 +740,8 @@
     }
 
     function toggleVoiceRecording() {
-      if (!isRecording) {
-        startVoiceTest();
-      } else {
-        stopVoiceTest();
-      }
+      if (!isRecording) startVoiceTest();
+      else stopVoiceTest();
     }
 
     function startVoiceTest() {
@@ -717,13 +749,11 @@
       try {
         recognition.start();
         isRecording = true;
-        btnToggleVoice.innerText = "Detener Dictado";
+        btnToggleVoice.innerText = "Pausar Micrófono";
         btnToggleVoice.classList.add('pulse');
-        voiceLiveTranscript.innerText = "Escuchando... comienza a leer en voz alta.";
-        timer = setInterval(updateTimer, 1000);
-      } catch (err) {
-        console.error(err);
-      }
+        voiceLiveTranscript.innerText = "Escuchando...";
+        if (!timer) timer = setInterval(updateTimer, 1000);
+      } catch (err) {}
     }
 
     function stopVoiceTest() {
@@ -735,36 +765,35 @@
       }
     }
 
-    // Temporizador y Resultados
+    // Temporizador
     function updateTimer() {
       if (timeLeft > 0) {
         timeLeft--;
+        timeSpent++;
         timerTag.innerText = timeLeft;
         if (currentMode === 'keyboard') calculateKeyboardMetrics();
         else calculateVoiceMetrics();
       } else {
-        clearInterval(timer);
         finishTest();
       }
     }
 
+    // Finalizar prueba en cualquier instante
     function finishTest() {
+      clearInterval(timer);
+      timer = null;
       if (currentMode === 'voice') stopVoiceTest();
       charInput.blur();
 
       const isKey = currentMode === 'keyboard';
+      if (isKey) calculateKeyboardMetrics();
+      else calculateVoiceMetrics();
+
       document.getElementById('modalTitle').innerText = isKey ? "¡Prueba de Teclado Finalizada!" : "¡Prueba de Voz Finalizada!";
       document.getElementById('finalWpm').innerText = wpmTag.innerText;
       document.getElementById('finalAccuracy').innerText = accuracyTag.innerText;
       document.getElementById('finalMistakes').innerText = isKey ? kMistakes : vMistakes;
-
-      if (isKey) {
-        document.getElementById('finalLabel3').innerText = "Caracteres Netos";
-        document.getElementById('finalMetric3').innerText = Math.max(0, totalTypedChars - kMistakes);
-      } else {
-        document.getElementById('finalLabel3').innerText = "Palabras Correctas";
-        document.getElementById('finalMetric3').innerText = vCorrectWords;
-      }
+      document.getElementById('finalTimeSpent').innerText = `${timeSpent}s`;
 
       resultsModal.style.display = "flex";
     }
@@ -779,7 +808,9 @@
 
     function resetKeyboardTest() {
       clearInterval(timer);
+      timer = null;
       timeLeft = maxTime;
+      timeSpent = 0;
       charIndex = 0;
       kMistakes = 0;
       totalTypedChars = 0;
@@ -797,8 +828,10 @@
 
     function resetVoiceTest() {
       clearInterval(timer);
+      timer = null;
       stopVoiceTest();
       timeLeft = maxTime;
+      timeSpent = 0;
       vCorrectWords = 0;
       vMistakes = 0;
       voiceWordIndex = 0;
@@ -807,7 +840,7 @@
       wpmTag.innerText = "0";
       accuracyTag.innerText = "100%";
       mistakesTag.innerText = "0";
-      voiceLiveTranscript.innerText = 'Haz clic en "Comenzar a Hablar" y lee el texto...';
+      voiceLiveTranscript.innerText = 'Haz clic en "Comenzar a Hablar" y lee las palabras fluidamente...';
 
       loadVoiceParagraph();
     }
