@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Evaluador de Velocidad & Registro Académico</title>
+  <title>CapacitiumX - Diagnóstico de Velocidad & Registro</title>
   <style>
     :root {
       --bg: #0b0f19;
@@ -18,6 +18,7 @@
       --correct: #10b981;
       --incorrect: #ef4444;
       --whatsapp-green: #22c55e;
+      --whatsapp-hover: #16a34a;
     }
 
     * {
@@ -37,7 +38,7 @@
       padding: 1.5rem;
     }
 
-    /* PANTALLA 1: FORMULARIO DE ACCESO */
+    /* PANTALLA INICIAL DE CAPTURA */
     .onboarding-overlay {
       display: flex;
       position: fixed;
@@ -45,7 +46,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(11, 15, 25, 0.95);
+      background: rgba(11, 15, 25, 0.96);
       backdrop-filter: blur(8px);
       justify-content: center;
       align-items: center;
@@ -57,7 +58,7 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 16px;
-      padding: 2.5rem;
+      padding: 2.2rem;
       max-width: 520px;
       width: 100%;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
@@ -65,23 +66,23 @@
 
     .form-header {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 1.8rem;
     }
 
     .form-header h2 {
       color: var(--accent);
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.7rem;
+      margin-bottom: 0.4rem;
     }
 
     .form-header p {
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       line-height: 1.4;
     }
 
     .input-group {
-      margin-bottom: 1.2rem;
+      margin-bottom: 1rem;
     }
 
     .input-group label {
@@ -89,17 +90,17 @@
       font-size: 0.85rem;
       font-weight: 600;
       color: var(--text-main);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.3rem;
     }
 
     .input-group input, .input-group select {
       width: 100%;
-      padding: 0.75rem 1rem;
+      padding: 0.7rem 0.9rem;
       border-radius: 8px;
       border: 1px solid var(--card-border);
       background: #030712;
       color: #fff;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       outline: none;
       transition: border-color 0.2s;
     }
@@ -111,7 +112,7 @@
     .grid-2-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+      gap: 0.8rem;
     }
 
     .btn-submit {
@@ -119,20 +120,20 @@
       background: var(--accent);
       color: #04121d;
       font-weight: 700;
-      font-size: 1rem;
-      padding: 0.85rem;
+      font-size: 0.95rem;
+      padding: 0.8rem;
       border: none;
       border-radius: 8px;
       cursor: pointer;
       transition: background 0.2s;
-      margin-top: 0.5rem;
+      margin-top: 0.6rem;
     }
 
     .btn-submit:hover {
       background: var(--accent-hover);
     }
 
-    /* PANTALLA 2: APLICACIÓN PRINCIPAL */
+    /* APLICACIÓN PRINCIPAL */
     .container {
       width: 100%;
       max-width: 900px;
@@ -154,20 +155,20 @@
       border: 1px solid var(--card-border);
       padding: 0.3rem 0.8rem;
       border-radius: 20px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--accent);
       margin-bottom: 0.75rem;
     }
 
     h1 {
-      font-size: 2rem;
+      font-size: 1.9rem;
       color: var(--accent);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
     }
 
     p.subtitle {
       color: var(--text-muted);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
     }
 
     .mode-switch {
@@ -181,11 +182,11 @@
       background: #1e293b;
       border: 1px solid var(--card-border);
       color: var(--text-muted);
-      padding: 0.6rem 1.4rem;
+      padding: 0.55rem 1.2rem;
       border-radius: 10px;
       cursor: pointer;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       transition: all 0.2s;
     }
 
@@ -212,12 +213,12 @@
       background: #1e293b;
       border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: 1rem;
+      padding: 0.9rem;
       text-align: center;
     }
 
     .stat-value {
-      font-size: 1.8rem;
+      font-size: 1.7rem;
       font-weight: 700;
       color: var(--accent);
       margin-bottom: 0.2rem;
@@ -248,8 +249,8 @@
       background-color: #030712;
       border: 2px solid var(--card-border);
       border-radius: 12px;
-      padding: 1.5rem;
-      min-height: 160px;
+      padding: 1.4rem;
+      min-height: 150px;
       margin-bottom: 1.5rem;
     }
 
@@ -263,9 +264,9 @@
 
     .text-display {
       font-family: 'Consolas', 'Courier New', monospace;
-      font-size: 1.2rem;
-      line-height: 1.8;
-      letter-spacing: 0.5px;
+      font-size: 1.15rem;
+      line-height: 1.7;
+      letter-spacing: 0.4px;
       user-select: none;
       word-break: break-word;
     }
@@ -301,14 +302,14 @@
     .voice-words-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
-      font-size: 1.15rem;
-      line-height: 1.6;
+      gap: 0.45rem;
+      font-size: 1.1rem;
+      line-height: 1.5;
       margin-bottom: 1rem;
     }
 
     .v-word {
-      padding: 0.2rem 0.4rem;
+      padding: 0.2rem 0.35rem;
       border-radius: 4px;
       color: #64748b;
     }
@@ -332,11 +333,11 @@
 
     .voice-live-transcript {
       border-top: 1px dashed var(--card-border);
-      padding-top: 0.75rem;
-      font-size: 0.9rem;
+      padding-top: 0.65rem;
+      font-size: 0.85rem;
       color: var(--text-muted);
       font-style: italic;
-      min-height: 25px;
+      min-height: 22px;
     }
 
     .controls {
@@ -349,12 +350,12 @@
 
     .time-selector {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.4rem;
       align-items: center;
     }
 
     .time-selector span {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
     }
 
@@ -362,10 +363,10 @@
       background: #1e293b;
       border: 1px solid var(--card-border);
       color: var(--text-muted);
-      padding: 0.4rem 0.8rem;
+      padding: 0.35rem 0.75rem;
       border-radius: 8px;
       cursor: pointer;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 600;
     }
 
@@ -385,8 +386,8 @@
       color: #0b0f19;
       border: none;
       border-radius: 8px;
-      padding: 0.6rem 1.2rem;
-      font-size: 0.9rem;
+      padding: 0.55rem 1.1rem;
+      font-size: 0.88rem;
       font-weight: 700;
       cursor: pointer;
       transition: background 0.2s;
@@ -424,7 +425,7 @@
       100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); }
     }
 
-    /* MODAL DE RESULTADOS & OFERTA */
+    /* MODAL DE RESULTADOS & REPORTE */
     .results-overlay {
       display: none;
       position: fixed;
@@ -432,8 +433,8 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(6px);
       justify-content: center;
       align-items: center;
       z-index: 150;
@@ -452,7 +453,7 @@
 
     .results-title {
       color: var(--accent);
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       margin-bottom: 1.2rem;
     }
 
@@ -460,65 +461,66 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0.8rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.4rem;
     }
 
     .result-item {
       background: #1e293b;
-      padding: 0.8rem;
+      padding: 0.75rem;
       border-radius: 10px;
     }
 
     .result-val {
-      font-size: 1.6rem;
+      font-size: 1.55rem;
       font-weight: bold;
     }
 
     .result-lbl {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--text-muted);
       margin-top: 0.2rem;
     }
 
-    /* Oferta Educativa de Cursos */
     .promo-box {
       background: #0f172a;
       border: 1px solid #334155;
       border-radius: 12px;
       padding: 1rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
       text-align: left;
     }
 
     .promo-box h4 {
       color: var(--accent);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       margin-bottom: 0.3rem;
     }
 
     .promo-box p {
       color: var(--text-muted);
       font-size: 0.8rem;
-      line-height: 1.3;
+      line-height: 1.35;
       margin-bottom: 0.8rem;
     }
 
     .btn-whatsapp {
-      display: inline-block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
       width: 100%;
       background-color: var(--whatsapp-green);
-      color: #052e16;
+      color: #042f1a;
       font-weight: 700;
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       text-decoration: none;
-      text-align: center;
-      padding: 0.65rem;
+      padding: 0.7rem;
       border-radius: 8px;
-      transition: opacity 0.2s;
+      transition: background 0.2s;
     }
 
     .btn-whatsapp:hover {
-      opacity: 0.9;
+      background-color: var(--whatsapp-hover);
     }
 
     @media (max-width: 600px) {
@@ -532,50 +534,50 @@
 </head>
 <body>
 
-  <!-- PANTALLA 1: FORMULARIO DE ACCESO Y CAPTURA DE LEADS -->
+  <!-- PANTALLA 1: FORMULARIO DE ACCESO Y ENVÍO AUTOMÁTICO A TU CORREO -->
   <div class="onboarding-overlay" id="onboardingModal">
     <div class="form-card">
       <div class="form-header">
-        <h2>Evaluación de Competencias</h2>
-        <p>Completa tus datos para ingresar al simulador interactivo de velocidad y recibir tu informe de diagnóstico.</p>
+        <h2>Evaluación de Diagnóstico</h2>
+        <p>Ingresa tus datos para habilitar el simulador. Recibirás tu constancia y recomendaciones de formación.</p>
       </div>
 
       <form id="leadForm" onsubmit="handleRegistration(event)">
         <div class="input-group">
           <label for="userName">Nombre Completo *</label>
-          <input type="text" id="userName" placeholder="Ej. Juan Pérez" required>
+          <input type="text" id="userName" name="Nombre" placeholder="Ej. Juan Pérez" required>
         </div>
 
         <div class="input-group">
           <label for="userEmail">Correo Electrónico *</label>
-          <input type="email" id="userEmail" placeholder="correo@ejemplo.com" required>
+          <input type="email" id="userEmail" name="Email" placeholder="correo@ejemplo.com" required>
         </div>
 
         <div class="input-group">
           <label for="userPhone">WhatsApp / Teléfono *</label>
-          <input type="tel" id="userPhone" placeholder="10 dígitos" required>
+          <input type="tel" id="userPhone" name="Telefono" placeholder="10 dígitos" required>
         </div>
 
         <div class="grid-2-col">
           <div class="input-group">
             <label for="userCareer">Carrera o Especialidad *</label>
-            <input type="text" id="userCareer" placeholder="Ej. Administración" required>
+            <input type="text" id="userCareer" name="Carrera" placeholder="Ej. Administración" required>
           </div>
 
           <div class="input-group">
             <label for="userPeriod">Semestre / Tetramestre *</label>
-            <select id="userPeriod" required>
+            <select id="userPeriod" name="Semestre_o_Tetra" required>
               <option value="" disabled selected>Selecciona</option>
-              <option value="1 a 3">1° - 3° (Inicial)</option>
-              <option value="4 a 6">4° - 6° (Intermedio)</option>
-              <option value="7 a 9">7° - 9° (Avanzado)</option>
-              <option value="Egresado">Egresado / Titulado</option>
+              <option value="1 a 3">1° - 3°</option>
+              <option value="4 a 6">4° - 6°</option>
+              <option value="7 a 9">7° - 9°</option>
+              <option value="Egresado">Egresado</option>
               <option value="Posgrado">Posgrado / Maestría</option>
             </select>
           </div>
         </div>
 
-        <button type="submit" class="btn-submit">Comenzar Evaluación</button>
+        <button type="submit" class="btn-submit" id="btnSubmitForm">Acceder a la Evaluación</button>
       </form>
     </div>
   </div>
@@ -583,18 +585,17 @@
   <!-- PANTALLA 2: APLICACIÓN PRINCIPAL -->
   <div class="container">
     <header>
-      <div class="welcome-badge" id="userGreetingBadge">Bienvenido al Evaluador</div>
-      <h1 id="mainTitle">Test de Velocidad y Expresión</h1>
-      <p class="subtitle">Evalúa tu rapidez con el teclado o fluidez verbal mediante el micrófono.</p>
+      <div class="welcome-badge" id="userGreetingBadge">CapacitiumX Diagnóstico</div>
+      <h1 id="mainTitle">Test de Velocidad & Fluidez</h1>
+      <p class="subtitle">Mide tu agilidad en teclado o dicción verbal con dictado de voz inteligente.</p>
     </header>
 
-    <!-- Selector de Modo -->
     <div class="mode-switch">
       <button class="mode-btn active-keyboard" id="btnModeKeyboard" onclick="switchMode('keyboard')">Modo Teclado</button>
       <button class="mode-btn" id="btnModeVoice" onclick="switchMode('voice')">Modo Dictado de Voz</button>
     </div>
 
-    <!-- Barra de Métricas Compartida -->
+    <!-- Barra de Métricas -->
     <div class="stats-bar">
       <div class="stat-card">
         <div class="stat-value" id="timer">60</div>
@@ -614,7 +615,7 @@
       </div>
     </div>
 
-    <!-- MODO TECLADO -->
+    <!-- SECCIÓN TECLADO -->
     <div class="test-section active" id="keyboardSection">
       <div class="box-container keyboard-box" onclick="focusInput()">
         <div class="text-display" id="textDisplay"></div>
@@ -634,11 +635,11 @@
       </div>
     </div>
 
-    <!-- MODO DICTADO DE VOZ -->
+    <!-- SECCIÓN VOZ -->
     <div class="test-section" id="voiceSection">
       <div class="box-container">
         <div class="voice-words-container" id="voiceWordsContainer"></div>
-        <div class="voice-live-transcript" id="voiceLiveTranscript">Haz clic en "Comenzar a Hablar" y lee las palabras fluidamente...</div>
+        <div class="voice-live-transcript" id="voiceLiveTranscript">Haz clic en "Comenzar a Hablar" y lee fluidamente...</div>
       </div>
       <div class="controls">
         <div class="time-selector">
@@ -657,7 +658,7 @@
 
   </div>
 
-  <!-- MODAL DE RESULTADOS Y CAPTACIÓN POST-PRUEBA -->
+  <!-- PANTALLA 3: RESULTADOS Y ENVÍO A WHATSAPP -->
   <div class="results-overlay" id="resultsModal">
     <div class="results-card">
       <h2 class="results-title" id="modalTitle">¡Evaluación Concluida!</h2>
@@ -680,11 +681,13 @@
         </div>
       </div>
 
-      <!-- Bloque de Oferta para tus Cursos y Formación -->
+      <!-- Envío Directo del Reporte a tu WhatsApp -->
       <div class="promo-box">
-        <h4 id="promoUserName">¡Mejora tu Productividad Profesional!</h4>
-        <p>Descubre nuestros cursos especializados en automatización, competencias laborales y herramientas digitales aplicadas a tu carrera.</p>
-        <a id="btnWhatsAppPromo" href="#" target="_blank" class="btn-whatsapp">Solicitar Información por WhatsApp</a>
+        <h4 id="promoUserName">Reporte Listo para CapacitiumX</h4>
+        <p>Envía tus resultados directamente al asesor para recibir tu retroalimentación y oferta educativa personalizada.</p>
+        <a id="btnWhatsAppReport" href="#" target="_blank" class="btn-whatsapp">
+          Enviar Resultados por WhatsApp al 8131103846
+        </a>
       </div>
 
       <button class="btn-action" style="width: 100%;" onclick="closeModalAndReset()">Hacer Otra Prueba</button>
@@ -692,6 +695,10 @@
   </div>
 
   <script>
+    // DATOS DE CONTACTO DE CAPACITIUMX
+    const TARGET_EMAIL = "capacitiumx@gmail.com";
+    const TARGET_WHATSAPP = "528131103846";
+
     // Variables de Registro
     let currentUser = {
       name: "",
@@ -701,7 +708,6 @@
       period: ""
     };
 
-    // Textos de Evaluación
     const texts = [
       "El exito de cualquier proyecto empresarial se basa en la disciplina constante, la adaptabilidad y el analisis de mercado. Aprender habilidades practicas permite crear herramientas independientes y rentables.",
       "La programacion web moderna ofrece infinitas posibilidades para optimizar flujos de trabajo, automatizar reportes financieros y procesar datos con gran velocidad. Mantener la concentracion agiliza el desarrollo continuo.",
@@ -740,29 +746,45 @@
     const btnToggleVoice = document.getElementById('btnToggleVoice');
     const resultsModal = document.getElementById('resultsModal');
 
-    // 1. MANEJO DEL REGISTRO INICIAL
+    // 1. ENVÍO AUTOMÁTICO DE DATOS INICIALES A TU CORREO
     function handleRegistration(event) {
       event.preventDefault();
-      
+      const btnSubmit = document.getElementById('btnSubmitForm');
+      btnSubmit.innerText = "Registrando y accediendo...";
+      btnSubmit.disabled = true;
+
       currentUser.name = document.getElementById('userName').value.trim();
       currentUser.email = document.getElementById('userEmail').value.trim();
       currentUser.phone = document.getElementById('userPhone').value.trim();
       currentUser.career = document.getElementById('userCareer').value.trim();
       currentUser.period = document.getElementById('userPeriod').value;
 
-      // Guardar en localStorage
-      localStorage.setItem('lead_user', JSON.stringify(currentUser));
+      // Envío en segundo plano al correo capacitiumx@gmail.com
+      fetch(`https://formsubmit.co/ajax/${TARGET_EMAIL}`, {
+        method: "POST",
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          _subject: `Nuevo Registro de Alumno: ${currentUser.name}`,
+          Nombre_Completo: currentUser.name,
+          Email: currentUser.email,
+          Telefono_WhatsApp: currentUser.phone,
+          Carrera_Especialidad: currentUser.career,
+          Semestre_Tetra: currentUser.period,
+          Fecha_Hora: new Date().toLocaleString("es-MX")
+        })
+      })
+      .then(response => response.json())
+      .then(data => console.log("Registro enviado a correo:", data))
+      .catch(error => console.error("Error al enviar a correo:", error));
 
-      // Actualizar saludos y enlaces
-      document.getElementById('userGreetingBadge').innerText = `Estudiante: ${currentUser.name} (${currentUser.career} - ${currentUser.period})`;
-      document.getElementById('promoUserName').innerText = `¡${currentUser.name}, lleva tu perfil al siguiente nivel!`;
-      
-      // Configurar enlace de WhatsApp personalizado
-      const waNumber = "528100000000"; // Reemplazar con tu número oficial
-      const waMessage = encodeURIComponent(`Hola, acabo de completar la prueba de velocidad. Mi nombre es ${currentUser.name}, estudio ${currentUser.career} (${currentUser.period}) y me gustaría recibir información sobre sus cursos y certificaciones.`);
-      document.getElementById('btnWhatsAppPromo').href = `https://wa.me/${waNumber}?text=${waMessage}`;
+      // Actualizar interfaz
+      document.getElementById('userGreetingBadge').innerText = `Estudiante: ${currentUser.name} | ${currentUser.career} (${currentUser.period})`;
+      document.getElementById('promoUserName').innerText = `¡${currentUser.name}, resultados listos!`;
 
-      // Ocultar formulario inicial y dar foco a la prueba
+      // Ocultar modal de registro
       document.getElementById('onboardingModal').style.display = 'none';
       focusInput();
     }
@@ -773,11 +795,11 @@
       return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.,;:!?¿¡"'()]/g, "").trim();
     }
 
-    // Configuración de Reconocimiento de Voz
+    // Configuración Reconocimiento de Voz
     function initSpeechRecognition() {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
-        voiceLiveTranscript.innerText = "Reconocimiento de voz nativo no disponible en este navegador. Utiliza Chrome o Edge.";
+        voiceLiveTranscript.innerText = "Navegador sin soporte de voz nativo. Recomendado Chrome/Edge.";
         btnToggleVoice.disabled = true;
         return;
       }
@@ -799,7 +821,7 @@
 
       recognition.onerror = (e) => {
         if (e.error === 'not-allowed') {
-          voiceLiveTranscript.innerText = "Acceso al micrófono denegado.";
+          voiceLiveTranscript.innerText = "Micrófono bloqueado. Permite el acceso.";
           stopVoiceTest();
         }
       };
@@ -1007,6 +1029,7 @@
       }
     }
 
+    // 2. FINALIZACIÓN Y GENERACIÓN DEL REPORTE COMPLETO A TU WHATSAPP Y CORREO
     function finishTest() {
       clearInterval(timer);
       timer = null;
@@ -1017,11 +1040,55 @@
       if (isKey) calculateKeyboardMetrics();
       else calculateVoiceMetrics();
 
+      const finalWpm = wpmTag.innerText;
+      const finalAcc = accuracyTag.innerText;
+      const finalErr = isKey ? kMistakes : vMistakes;
+      const finalDur = `${timeSpent}s`;
+
       document.getElementById('modalTitle').innerText = isKey ? "¡Prueba de Teclado Finalizada!" : "¡Prueba de Voz Finalizada!";
-      document.getElementById('finalWpm').innerText = wpmTag.innerText;
-      document.getElementById('finalAccuracy').innerText = accuracyTag.innerText;
-      document.getElementById('finalMistakes').innerText = isKey ? kMistakes : vMistakes;
-      document.getElementById('finalTimeSpent').innerText = `${timeSpent}s`;
+      document.getElementById('finalWpm').innerText = finalWpm;
+      document.getElementById('finalAccuracy').innerText = finalAcc;
+      document.getElementById('finalMistakes').innerText = finalErr;
+      document.getElementById('finalTimeSpent').innerText = finalDur;
+
+      // Estructura del mensaje de reporte para tu WhatsApp
+      const mensajeWhatsApp = `*REPORTE DE EVALUACIÓN - CAPACITIUMX*%0A` +
+        `━━━━━━━━━━━━━━━━━━━━%0A` +
+        `👤 *Alumno:* ${currentUser.name}%0A` +
+        `📧 *Email:* ${currentUser.email}%0A` +
+        `📱 *Teléfono:* ${currentUser.phone}%0A` +
+        `🎓 *Carrera:* ${currentUser.career}%0A` +
+        `📅 *Semestre/Tetra:* ${currentUser.period}%0A` +
+        `━━━━━━━━━━━━━━━━━━━━%0A` +
+        `📊 *RESULTADOS:*%0A` +
+        `• *Modo:* ${isKey ? 'Teclado' : 'Dictado por Voz'}%0A` +
+        `• *Velocidad:* ${finalWpm} PPM%0A` +
+        `• *Precisión:* ${finalAcc}%0A` +
+        `• *Errores cometidos:* ${finalErr}%0A` +
+        `• *Tiempo de ejecución:* ${finalDur}%0A` +
+        `━━━━━━━━━━━━━━━━━━━━%0A` +
+        `Solicito información de los cursos y programas de capacitación disponibles.`;
+
+      document.getElementById('btnWhatsAppReport').href = `https://wa.me/${TARGET_WHATSAPP}?text=${mensajeWhatsApp}`;
+
+      // Envío del reporte final también al correo en segundo plano
+      fetch(`https://formsubmit.co/ajax/${TARGET_EMAIL}`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          _subject: `Resultado de Evaluación: ${currentUser.name} (${finalWpm} PPM)`,
+          Alumno: currentUser.name,
+          Email: currentUser.email,
+          Telefono: currentUser.phone,
+          Carrera: currentUser.career,
+          Semestre_Tetra: currentUser.period,
+          Modo_Prueba: isKey ? 'Teclado' : 'Voz',
+          Palabras_Por_Minuto: finalWpm,
+          Precision: finalAcc,
+          Errores: finalErr,
+          Tiempo_Empleo: finalDur
+        })
+      }).catch(err => console.error("Error reporte correo:", err));
 
       resultsModal.style.display = "flex";
     }
@@ -1079,7 +1146,6 @@
       else resetVoiceTest();
     }
 
-    // Inicialización general
     charInput.addEventListener("input", initKeyboardTyping);
     window.addEventListener("load", () => {
       initSpeechRecognition();
